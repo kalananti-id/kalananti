@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Avoiding Jump Game - Interactive Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2e8b57;
+            --light-green: #f0fdf4;
+            --border-color: #a8e0a8;
+        }
+
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background-color: #e0ffe0; 
+            margin: 0; padding: 20px;
+            display: flex; justify-content: center;
+        }
+
+        .container { 
+            max-width: 900px; background: white; padding: 40px; 
+            border-radius: 30px; border: 6px solid var(--border-color); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Header */
+        .header-wrapper {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 30px; text-align: center;
+        }
+        .header-content { flex: 1; }
+        .header-content h1 { 
+            font-family: 'Caveat Brush', cursive; color: var(--primary-green);
+            font-size: 3.5rem; margin: 0; 
+        }
+        .header-img { width: 100px; height: auto; border-radius: 15px; }
+
+        /* Grid System */
+        .grid { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
+        }
+
+        .section { 
+            border: 3px dashed var(--border-color); padding: 20px; border-radius: 20px; 
+            background: var(--light-green); position: relative; min-height: 180px;
+        }
+
+        .section h3 { 
+            font-family: 'Caveat Brush', cursive; color: var(--primary-green);
+            font-size: 1.6rem; margin-top: 0; display: flex; align-items: center;
+        }
+
+        .number { 
+            background: var(--primary-green); color: white; 
+            width: 30px; height: 30px; border-radius: 50%; 
+            display: inline-flex; justify-content: center; align-items: center;
+            margin-right: 10px; font-family: sans-serif; font-size: 1rem;
+        }
+
+        input[type="text"] {
+            width: 85%; padding: 10px; border: 2px solid #fff; 
+            border-radius: 10px; margin-bottom: 10px; font-family: 'Nunito', sans-serif;
+        }
+
+        .checkbox-group label { display: block; margin: 5px 0; font-weight: bold; color: #444; }
+
+        /* Posisi Ilustrasi Kecil */
+        .deco-img {
+            position: absolute; bottom: 10px; right: 10px;
+            width: 60px; height: auto; opacity: 0.8; pointer-events: none;
+            border-radius: 8px;
+        }
+
+        .btn-print {
+            display: block; width: 100%; max-width: 300px; margin: 40px auto 0;
+            background: var(--primary-green); color: white; padding: 15px;
+            border: none; border-radius: 50px; font-size: 1.3rem;
+            font-family: 'Caveat Brush', cursive; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        
+        @media print {
+            .btn-print { display: none; }
+            body { background: white; padding: 0; }
+            .container { border: 2px solid #eee; box-shadow: none; }
+            .section { background: white !important; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-wrapper">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f101da5e-bdeb-45bd-ad50-4be5d5cd45bc.png" class="header-img" alt="Bunny">
+        <div class="header-content">
+            <h1>My Avoiding Jump Game</h1>
+            <p>Rencanakan game-mu sebelum coding di OctoStudio!</p>
+        </div>
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b121c92e-5056-4157-a32f-df09fa49133c.png" class="header-img" alt="Gamepad">
+    </div>
+
+    <div class="grid">
+        <div class="section">
+            <h3><span class="number">1</span> IDENTITAS GAME</h3>
+            Judul Game: <input type="text" placeholder="">
+            Namaku: <input type="text" placeholder="">
+            Coding bersama: <input type="text" placeholder="">
+            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/3f172ea5-55ea-49eb-94f7-76e95698d99c.png" class="deco-img">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">2</span> TENTANG APA GAME SAYA?</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Menghindari rintangan</label>
+                <label><input type="checkbox"> Pemain lompat terus</label>
+                <label><input type="checkbox"> Bertahan sampai akhir</label>
+            </div>
+            <br>
+            Lainnya: <input type="text" placeholder="">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">3</span> KARAKTER GAME</h3>
+            Nama Pemain: <input type="text">
+            Tampilan (warna/bentuk): <input type="text">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">4</span> RINTANGAN</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Kaktus 🌵</label>
+                <label><input type="checkbox"> Batu ⛰️</label>
+                <label><input type="checkbox"> Monster 👾</label>
+            </div>
+            <br>
+            Lainnya: <input type="text" placeholder="">
+            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/ace12d85-fbbe-4976-af24-dad07366f013.png" class="deco-img">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">5</span> ATURAN GAME</h3>
+            Mulai saat: <input type="text">
+            Kalah jika: <input type="text">
+            Menang jika: <input type="text">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">6</span> BLOK KODE</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> When Play</label>
+                <label><input type="checkbox"> Repeat</label>
+                <label><input type="checkbox"> Move</label>
+            </div>
+            <br>
+            Lainnya: <input type="text">
+            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/79f6c160-834f-430c-9fa5-64068a731880.png" class="deco-img">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">7</span> IDE INOVASI</h3>
+            <div class="checkbox-group">
+                Inovasi 1: <input type="text">
+                Inovasi 2: <input type="text">
+                Inovasi 3: <input type="text">
+            </div>
+            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/550fb6a3-e447-4897-976a-42f0c6dd36ac.png" class="deco-img">
+        </div>
+
+        <div class="section">
+            <h3><span class="number">8</span> SIAP CODING!</h3>
+            <p>Tanda tangan di sini:</p>
+            <input type="text" placeholder="Nama kerenmu">
+        </div>
+    </div>
+
+    <button class="btn-print" onclick="window.print()">Simpan Planner ke PDF</button>
+</div>
+
+</body>
+</html>
