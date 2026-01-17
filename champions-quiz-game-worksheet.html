@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champions Quiz Planner - Lua Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Nunito:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2c3e50;
+            --accent-gold: #f1c40f;
+            --light-blue: #ecf0f1;
+            --border-color: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #d6eaf8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            border: 6px solid var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-wrapper {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px double var(--primary-blue);
+            padding-bottom: 20px;
+        }
+
+        .header-wrapper h1 {
+            font-family: 'Caveat Brush', cursive;
+            color: var(--primary-blue);
+            font-size: 3.5rem;
+            margin: 0;
+        }
+
+        .badge {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .section {
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 20px;
+            background: var(--light-blue);
+        }
+
+        .section h3 {
+            font-family: 'Caveat Brush', cursive;
+            color: var(--primary-blue);
+            font-size: 1.6rem;
+            margin-top: 0;
+        }
+
+        .number {
+            background: var(--primary-blue);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .code-box {
+            background: #282a36;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .btn-print {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-family: 'Caveat Brush', cursive;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            .btn-print {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header-wrapper">
+            <span class="badge">LUA PROGRAMMING</span>
+            <h1>🏆 Champions Quiz Planner</h1>
+            <p>Rancang logika kuis coding-mu sebelum masuk ke OneCompiler!</p>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <h3><span class="number">1</span> PROFIL DEVELOPER</h3>
+                Nama Programmer: <input type="text" placeholder="Nama kamu">
+                Judul Game: <input type="text" placeholder="Contoh: Kuis Matematika Keren">
+                Coding bersama: <input type="text" placeholder="Ayah/Bunda">
+            </div>
+
+            <div class="section">
+                <h3><span class="number">2</span> VARIABEL UTAMA</h3>
+                <p>Variabel apa yang digunakan untuk menyimpan poin?</p>
+                <input type="text" placeholder="Contoh: score = 0">
+                <p>Variabel untuk menyimpan input user:</p>
+                <input type="text" placeholder="Contoh: ans1, ans2">
+            </div>
+
+            <div class="section">
+                <h3><span class="number">3</span> PERTANYAAN KUIS</h3>
+                Pertanyaan 1:
+                <textarea rows="2" placeholder="Contoh: 2 + 2 * 2 adalah?"></textarea>
+                Jawaban Benar: <input type="text" placeholder="Kunci jawaban">
+                Pertanyaan 2:
+                <textarea rows="2"
+                    placeholder="Contoh: Apakah 1score adalah nama variabel yang valid di Lua?"></textarea>
+                Jawaban Benar: <input type="text" placeholder="Kunci jawaban">
+                Pertanyaan 3:
+                <textarea rows="2"
+                    placeholder="Contoh: Bagaimana cara menambahkan nilai ke variabel di Lua?"></textarea>
+                Jawaban Benar: <input type="text" placeholder="Kunci jawaban">
+            </div>
+
+            <div class="section">
+                <h3><span class="number">4</span> LOGIKA IF-ELSE</h3>
+
+                <p>Jika jawaban <b>Benar (TRUE)</b>, apa kodenya?</p>
+                <div class="code-box">
+                    <span style="color: #ff79c6;">print</span>("<input type="text" placeholder="Pesan jika benar..."
+                        style="width: 60%; background: transparent; border: none; border-bottom: 1px dashed #6272a4; color: #f1fa8c; font-family: monospace;">")<br>
+                    score = score + <input type="text" placeholder="0"
+                        style="width: 30px; background: transparent; border: none; border-bottom: 1px dashed #6272a4; color: #bd93f9; font-family: monospace; text-align: center;">
+                </div>
+
+                <p>Jika jawaban <b>Salah (FALSE)</b>, apa kodenya?</p>
+                <div class="code-box">
+                    <span style="color: #ff79c6;">print</span>("<input type="text" placeholder="Pesan jika salah..."
+                        style="width: 60%; background: transparent; border: none; border-bottom: 1px dashed #6272a4; color: #f1fa8c; font-family: monospace;">")
+                </div>
+
+                <p style="font-size: 0.8rem; color: #666; font-style: italic; margin-top: 10px;">
+                    *Petunjuk: Di file Lua, kita menggunakan <b>score = score + 2</b> untuk menambah poin.
+                </p>
+            </div>
+
+            <div class="section">
+                <h3><span class="number">5</span> TINGKATAN JUARA</h3>
+                <p>Tentukan batasan skor dan pesan untuk pemainmu:</p>
+
+                <div style="margin-bottom: 15px; border-left: 4px solid #f1c40f; padding-left: 10px;">
+                    <strong>Pangkat 1 (LEGEND):</strong><br>
+                    Jika skor >= <input type="number" placeholder="10" style="width: 50px; padding: 5px;">
+                    Tampilkan: <input type="text" placeholder="Contoh: Kamu Luar Biasa!" style="width: 60%;">
+                </div>
+
+                <div style="margin-bottom: 15px; border-left: 4px solid #bdc3c7; padding-left: 10px;">
+                    <strong>Pangkat 2 (CHAMPION):</strong><br>
+                    Jika skor >= <input type="number" placeholder="7" style="width: 50px; padding: 5px;">
+                    Tampilkan: <input type="text" placeholder="Contoh: Kerja bagus!" style="width: 60%;">
+                </div>
+
+                <div style="margin-bottom: 15px; border-left: 4px solid #cd7f32; padding-left: 10px;">
+                    <strong>Pangkat 3 (CONTENDER):</strong><br>
+                    Jika skor >= <input type="number" placeholder="4" style="width: 50px; padding: 5px;">
+                    Tampilkan: <input type="text" placeholder="Contoh: Kamu hampir bisa!" style="width: 60%;">
+                </div>
+
+                <div style="background: #fdf2f2; padding: 10px; border-radius: 8px;">
+                    <strong>Sisanya (STARTER):</strong><br>
+                    Tampilkan: <input type="text" placeholder="Contoh: Ayo belajar lagi!" style="width: 75%;">
+                </div>
+
+                <p style="font-size: 0.8rem; color: #666; font-style: italic; margin-top: 10px;">
+                    *Tips: Pastikan angka skor menurun dari atas ke bawah (misal: 10, 7, 4).
+                </p>
+            </div>
+
+            <div class="section">
+                <h3><span class="number">6</span> CHECKLIST CODING</h3>
+                <p>Centang perintah Lua yang kamu gunakan:</p>
+
+                <div class="checkbox-group" style="display: flex; flex-direction: column; gap: 8px;">
+                    <label><input type="checkbox"> Pakai <b>print()</b> (Menampilkan teks)</label>
+                    <label><input type="checkbox"> Pakai <b>io.read()</b> (Mengambil input)</label>
+                    <label><input type="checkbox"> Pakai <b>==</b> (Mengecek jawaban)</label>
+                    <label><input type="checkbox"> Pakai <b>score = score + ...</b> (Tambah poin)</label>
+                </div>
+
+                <div style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 10px;">
+                    <p>Tambah perintah lain yang kamu pakai:</p>
+                    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <input type="checkbox"> <input type="text" placeholder="Contoh: if / elseif"
+                            style="margin-left: 10px; width: 80%;">
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <input type="checkbox"> <input type="text" placeholder="Contoh: and / or"
+                            style="margin-left: 10px; width: 80%;">
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox"> <input type="text" placeholder="Lainnya..."
+                            style="margin-left: 10px; width: 80%;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+    <h3><span class="number">7</span> IDE INOVASI KREATIF</h3>
+    <p>Bagaimana cara membuat gamemu lebih seru? (Pilih atau tulis sendiri):</p>
+    
+    <div class="checkbox-group" style="margin-bottom: 15px;">
+        <label><input type="checkbox"> Tambah <b>Pilihan Ganda</b> (A, B, atau C)</label><br>
+        <label><input type="checkbox"> Tambah <b>Nyawa (Life)</b> yang berkurang jika salah</label><br>
+        <label><input type="checkbox"> Tambah <b>Input Nama</b> di awal game</label>
+    </div>
+
+    <div style="background: #fff; padding: 15px; border-radius: 12px; border: 2px dashed var(--primary-blue);">
+        <strong>Rencana Inovasiku:</strong>
+        <div style="margin-top: 10px;">
+            1. <input type="text" placeholder="Misal: Menambah pertanyaan tentang luar angkasa" style="width: 90%;">
+            2. <input type="text" placeholder="Misal: Membuat sistem skor jadi kelipatan 10" style="width: 90%;">
+            3. <input type="text" placeholder="Ide lainnya..." style="width: 90%;">
+        </div>
+    </div>
+</div>
+        </div>
+
+        <button class="btn-print" onclick="window.print()">Simpan Planner ke PDF</button>
+    </div>
+
+</body>
+
+</html>
