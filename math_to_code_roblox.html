@@ -8,8 +8,8 @@
   <style>
     :root {
       --bg: #f5f7f6;
-      --mint: #eaf9f3;
-      --mint-2: #dff6ee;
+      --mint: #d7eee3;
+      --mint-2: #c8e5d9;
       --green: #417b62;
       --green-dark: #1f5b47;
       --green-deep: #184d3b;
@@ -23,7 +23,7 @@
       --purple: #7a63d9;
       --pink: #ff7ab7;
       --blue: #5bb5e6;
-      --good: #dff6ee;
+      --good: #d7eee3;
       --bad: #fff1ec;
     }
 
@@ -35,10 +35,11 @@
     body {
       margin: 0;
       padding: 0;
-      background: #dfe7e6;
+      background: #d7e1df;
       font-family: Arial, "Trebuchet MS", sans-serif;
       color: var(--ink);
-      overflow: hidden
+      overflow: hidden;
+      height: 100%;
     }
 
     body {
@@ -46,7 +47,7 @@
         radial-gradient(circle at 10% 10%, rgba(244, 203, 180, .35) 0 2%, transparent 2.2%),
         radial-gradient(circle at 93% 9%, rgba(169, 238, 242, .95) 0 6%, rgba(169, 238, 242, .35) 6.2% 10%, transparent 10.2%),
         radial-gradient(circle at 22% 88%, rgba(255, 201, 77, .3) 0 3%, transparent 3.1%),
-        linear-gradient(135deg, #f6f7f7 0%, #f6f7f7 42%, #edf9f4 42%, #edf9f4 100%);
+        linear-gradient(135deg, #eef2f1 0%, #eef2f1 42%, #e0f0e8 42%, #e0f0e8 100%);
     }
 
     .deck {
@@ -59,7 +60,7 @@
     .slide {
       position: absolute;
       inset: 0;
-      padding: 34px 44px 88px;
+      padding: 34px 44px 140px;
       display: grid;
       grid-template-rows: auto 1fr;
       gap: 20px;
@@ -67,6 +68,9 @@
       transform: translateX(60px) scale(.98);
       pointer-events: none;
       transition: all .45s ease;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     .slide.active {
@@ -97,7 +101,7 @@
       font-weight: 800;
       box-shadow: var(--shadow);
       background: white;
-      border: 2px solid rgba(79, 150, 119, .18);
+      border: 2px solid rgba(79, 150, 119, .24);
     }
 
     .logo-pill {
@@ -156,9 +160,9 @@
       font-size: 68px;
       line-height: .95;
       letter-spacing: -2px;
-      color: #fff;
-      text-shadow: 0 4px 0 var(--green-dark), 0 9px 0 var(--green-deep), 0 0 0 transparent;
-      -webkit-text-stroke: 10px rgba(79, 150, 119, .18);
+      color: #fbfffd;
+      text-shadow: 0 3px 0 #4f9677, 0 7px 0 var(--green-dark), 0 10px 18px rgba(24, 77, 59, .22);
+      -webkit-text-stroke: 8px #b8d8ca;
       paint-order: stroke fill;
       margin-bottom: 20px;
     }
@@ -173,7 +177,8 @@
     .lead {
       font-size: 22px;
       line-height: 1.45;
-      max-width: 760px
+      max-width: 760px;
+      color: #315849
     }
 
     .big-stat-grid {
@@ -199,15 +204,73 @@
 
     .stat span {
       font-size: 16px;
-      line-height: 1.35
+      line-height: 1.35;
+      color: #315849
     }
 
     .visual {
       position: relative;
       min-height: 520px;
-      padding: 26px;
-      background: linear-gradient(160deg, rgba(234, 249, 243, .85), rgba(255, 255, 255, .92));
-      overflow: hidden
+      padding: 34px 38px;
+      background: linear-gradient(160deg, rgba(215, 238, 227, .92), rgba(255, 255, 255, .96));
+      overflow: hidden;
+    }
+
+    .visual-layout {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      align-items: center;
+      gap: 28px;
+      height: 100%;
+    }
+
+    .visual-copy {
+      max-width: 460px;
+    }
+
+    .visual-kicker {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--green-deep);
+      font-weight: 900;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    .visual-title {
+      font-size: 42px;
+      line-height: 1.05;
+      color: var(--green-deep);
+      margin: 0 0 12px;
+    }
+
+    .visual-desc {
+      font-size: 20px;
+      line-height: 1.5;
+      color: #315849;
+      margin-bottom: 18px;
+    }
+
+    .visual-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .preview-label {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .9);
+      color: var(--green-deep);
+      font-weight: 900;
+      font-size: 15px;
+      box-shadow: var(--shadow);
     }
 
     .bubble {
@@ -216,48 +279,43 @@
     }
 
     .b1 {
-      width: 170px;
-      height: 170px;
-      background: rgba(169, 238, 242, .9);
-      right: -18px;
-      top: -16px
+      width: 140px;
+      height: 140px;
+      background: rgba(169, 238, 242, .65);
+      right: -12px;
+      top: -8px;
     }
 
     .b2 {
-      width: 52px;
-      height: 52px;
-      background: rgba(244, 203, 180, .85);
-      left: 30px;
-      top: 100px
+      width: 40px;
+      height: 40px;
+      background: rgba(244, 203, 180, .55);
+      left: 18px;
+      top: 90px;
     }
 
     .b3 {
-      width: 26px;
-      height: 26px;
-      background: rgba(255, 201, 77, .75);
-      right: 120px;
-      top: 164px
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 201, 77, .55);
+      right: 82px;
+      top: 120px;
     }
 
     .b4 {
-      width: 92px;
-      height: 92px;
-      background: rgba(79, 150, 119, .18);
-      right: 30px;
-      bottom: 34px
+      display: none;
     }
 
     .obby-stage {
-      position: absolute;
-      right: 28px;
-      bottom: 28px;
-      width: 360px;
-      height: 250px;
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      height: 310px;
       border-radius: 30px;
       overflow: hidden;
       border: 3px solid rgba(79, 150, 119, .18);
       box-shadow: var(--shadow);
-      background: linear-gradient(160deg, #7a21ba, #45156f)
+      background: linear-gradient(160deg, #7a21ba, #45156f);
     }
 
     .ceiling {
@@ -391,27 +449,26 @@
     }
 
     .mini-tags {
-      position: absolute;
-      left: 30px;
-      top: 30px;
+      position: static;
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      width: 260px
+      width: 100%;
     }
 
     .mini-tags .box {
       padding: 16px 18px;
-      background: #fff;
-      border-radius: 22px;
+      background: #ffffff;
+      border-radius: 20px;
       box-shadow: var(--shadow);
       font-weight: 800;
-      font-size: 20px;
-      color: var(--green-deep)
+      font-size: 18px;
+      color: var(--green-deep);
+      border: 2px solid rgba(79, 150, 119, .10);
     }
 
     .mini-tags .box.small {
-      font-size: 18px;
-      background: var(--mint)
+      background: var(--mint);
     }
 
     .content {
@@ -477,7 +534,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       background: var(--mint);
-      font-weight: 800;
+      font-weight: 500;
       border: 2px solid rgba(79, 150, 119, .14)
     }
 
@@ -535,8 +592,11 @@
       font-family: "Courier New", monospace;
       font-size: 16px;
       line-height: 1.5;
-      white-space: pre-wrap;
-      word-break: break-word
+      white-space: pre-line;
+      /* Menghapus spasi kosong di awal, tapi tetap menjaga ganti baris */
+      text-align: left;
+      /* Memastikan teks rata kiri */
+      word-break: break-word;
     }
 
     .tree-box {
@@ -664,11 +724,21 @@
       background: var(--green)
     }
 
-    .check-item b {
+    /* Hanya targetkan Judul (b yang pertama) */
+    .check-item div>b:first-child {
       display: block;
       margin-bottom: 5px;
-      font-size: 20px;
-      color: var(--green-deep)
+      font-size: 19px;
+      /* Sedikit dikecilkan agar pas di 2 kolom */
+      color: var(--green-deep);
+    }
+
+    /* Biarkan b di dalam span tetap inline dan ukurannya mengikuti span */
+    .check-item span b {
+      display: inline;
+      font-size: inherit;
+      color: var(--green);
+      /* Warna hijau tapi ukuran normal */
     }
 
     .check-item span {
@@ -752,7 +822,7 @@
 
     .mini-stage {
       padding: 22px;
-      background: linear-gradient(180deg, #dff6ee, #bfe7d8);
+      background: linear-gradient(180deg, #d7eee3, #b8dccd);
       min-height: 300px;
       position: relative;
       overflow: hidden
@@ -880,6 +950,28 @@
       line-height: 1.5
     }
 
+    .promo-container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-top: 20px;
+}
+.promo-image {
+  flex: 1;
+  text-align: center;
+}
+.promo-details {
+  flex: 1.2;
+}
+.next-step-badge {
+  margin-top: 20px;
+  padding: 15px;
+  background: var(--yellow);
+  border-radius: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
     @media (max-width: 1100px) {
 
       .hero,
@@ -913,26 +1005,46 @@
     <section class="slide active">
       <div class="topbar">
         <div class="brand">
-          <div class="logo-pill">ruangguru CODING</div>
-          <div class="logo-pill">Kalananti by Ruangguru</div>
-          <div class="logo-pill">STEM</div>
+          <div class="logo-pill">Math Champs</div>
+          <b>X</b>
+          <div class="logo-pill">Ruangguru Coding</div>
         </div>
-        <div class="code-pill">Kode Akses: MTC-RBX-25</div>
+        <div class="code-pill">Slide 1</div>
       </div>
 
       <div class="hero">
         <div class="hero-panel">
-          <div class="eyebrow">Interactive Slides • Trial Class 60 Menit</div>
+          <div class="eyebrow">Interactive Slides • Trial Class</div>
+
           <h1>Math to Code</h1>
           <div class="hero-sub">Roblox Studio Edition</div>
-          <p class="lead">Belajar matematika sambil membuat obby quiz. Pemain melihat soal di tembok, lalu memilih jalur
-            kanan atau kiri. Kalau jawabannya benar, tembok bisa ditembus. Kalau salah, pemain mati dan kembali dari
-            awal.</p>
+
+          <p class="lead">
+            Menggabungkan matematika, logika, dan desain game. Kamu akan membangun tantangan
+            <b>"Math Obby Game"</b>: baca soal di tembok, pilih jalur yang benar untuk lewat,
+            atau hadapi konsekuensi <i>respawn</i> jika salah memilih.
+          </p>
+
           <div class="big-stat-grid">
-            <div class="stat"><b>Target</b><span>Siswa pemula yang baru kenal coding Roblox Studio</span></div>
-            <div class="stat"><b>Output</b><span>Obby quiz kiri-kanan dengan soal matematika</span></div>
-            <div class="stat"><b>Fokus</b><span>Part, SurfaceGui, TextLabel, dan script sederhana</span></div>
-            <div class="stat"><b>Gaya Belajar</b><span>Step by step, visual, dan langsung praktik</span></div>
+            <div class="stat">
+              <b>Level</b>
+              <span>Beginner Explorer (Roblox Studio)</span>
+            </div>
+
+            <div class="stat">
+              <b>Misi</b>
+              <span>Membangun "Math Obby Game" yang menantang!</span>
+            </div>
+
+            <div class="stat">
+              <b>Fokus</b>
+              <span>Part, SurfaceGui, TextLabel, dan Scripting sederhana</span>
+            </div>
+
+            <div class="stat">
+              <b>Alur</b>
+              <span>Build, Code, & Test!</span>
+            </div>
           </div>
         </div>
 
@@ -940,28 +1052,43 @@
           <div class="bubble b1"></div>
           <div class="bubble b2"></div>
           <div class="bubble b3"></div>
-          <div class="bubble b4"></div>
-          <div class="mini-tags">
-            <div class="box">Hari ini kita bikin:</div>
-            <div class="box small">Soal di tembok</div>
-            <div class="box small">Jawaban kiri & kanan</div>
-            <div class="box small">Benar tembus • Salah mati</div>
-          </div>
-          <div class="obby-stage">
-            <div class="left-wall"></div>
-            <div class="right-wall"></div>
-            <div class="ceiling"></div>
-            <div class="floor"></div>
-            <div class="gate">
-              <div class="ans-left">7</div>
-              <div class="ans-right">8</div>
+
+          <div class="visual-layout">
+            <div class="visual-copy">
+              <div class="visual-kicker">Hari ini kita bikin</div>
+              <h3 class="visual-title">Math Obby Game</h3>
+              <p class="visual-desc">
+                Pemain membaca soal di tembok, lalu memilih jalur kiri atau kanan.
+                Kalau benar, bisa lewat. Kalau salah, karakter mati dan kembali ke awal.
+              </p>
+
+              <div class="mini-tags">
+                <div class="box small">Soal di tembok</div>
+                <div class="box small">Opsi kiri & kanan</div>
+                <div class="box small">Benar → tembus</div>
+                <div class="box small">Salah → mati</div>
+              </div>
             </div>
-            <div class="platform-yellow"></div>
-            <div class="platform-blue"></div>
-            <div class="platform-green"></div>
-            <div class="player">
-              <div class="head"></div>
-              <div class="body"></div>
+
+            <div class="visual-preview">
+              <div class="preview-label">Preview Game</div>
+              <div class="obby-stage">
+                <div class="left-wall"></div>
+                <div class="right-wall"></div>
+                <div class="ceiling"></div>
+                <div class="floor"></div>
+                <div class="gate">
+                  <div class="ans-left">7</div>
+                  <div class="ans-right">8</div>
+                </div>
+                <div class="platform-yellow"></div>
+                <div class="platform-blue"></div>
+                <div class="platform-green"></div>
+                <div class="player">
+                  <div class="head"></div>
+                  <div class="body"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -971,97 +1098,90 @@
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Tujuan Belajar</div>
-          <div class="tag">Konsep Obby Quiz</div>
+          <div class="tag">Main Quest</div>
+          <div class="tag">The Math Quiz Gate</div>
         </div>
         <div class="code-pill">Slide 2</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Apa yang siswa pelajari?</h2>
-          <p>Di trial class ini, siswa tidak perlu membuat semua map dari nol. Mereka fokus melengkapi bagian-bagian
-            penting supaya obby quiz bisa berjalan.</p>
+          <h2>Misi Seru Kamu Hari Ini! 🚀</h2>
+          <p>Kamu nggak perlu pusing bikin map dari nol. Fokus kamu adalah jadi <b>Game Developer</b> yang merakit
+            sistem
+            kuisnya sampai berhasil!</p>
         </div>
         <div class="grid-3">
           <div class="panel card">
-            <h3>1. Menata object</h3>
-            <p>Siswa mengenal <b>Part</b>, memberi nama object, dan menyusun jalur quiz sederhana di Roblox Studio.</p>
-            <div class="pill-list"><span>Part</span><span>Model</span><span>SpawnLocation</span></div>
+            <h3>1. Jadi Arsitek Game</h3>
+            <p>Kamu akan menyusun <b>Part</b> untuk jadi tembok rintangan dan belajar cara kasih nama object biar rapi
+              di
+              Explorer.</p>
+            <div class="pill-list"><span>Part</span><span>Anchor</span><span>PartColor</span></div>
           </div>
           <div class="panel card">
-            <h3>2. Menampilkan soal</h3>
-            <p>Siswa memakai <b>SurfaceGui</b> dan <b>TextLabel</b> agar tembok bisa menampilkan soal dan jawaban.</p>
-            <div class="pill-list"><span>SurfaceGui</span><span>TextLabel</span><span>Text</span></div>
+            <h3>2. Bikin Tembok Tantangan</h3>
+            <p>Gunakan <b>SurfaceGui</b> dan <b>TextLabel</b> supaya tembokmu bisa menampilkan soal matematika untuk
+              pemain.</p>
+            <div class="pill-list"><span>SurfaceGui</span><span>TextLabel</span><span>Design</span></div>
           </div>
           <div class="panel card">
-            <h3>3. Membuat aturan game</h3>
-            <p>Siswa membuat tembok benar bisa ditembus dan tembok salah membuat karakter mati lalu mengulang dari awal.
-            </p>
-            <div class="pill-list"><span>CanCollide</span><span>Touched</span><span>Humanoid</span></div>
+            <h3>3. Pasang <i>Script Magic</i></h3>
+            <p>Tentukan nasib pemain! Jawaban benar bisa tembus, tapi kalau salah sentuh... <i>Wosh!</i> Pemain harus
+              mengulang.</p>
+            <div class="pill-list"><span>Scripting</span><span>CanCollide</span><span>Touched</span></div>
           </div>
         </div>
-        <div class="quote">Target akhirnya: pemain membaca soal, memilih kanan atau kiri, lalu melihat hasil dari
-          pilihannya secara langsung.</div>
+        <div class="quote">Targetnya: Bikin kuis matematika yang bikin pemain mikir keras sekaligus deg-degan!</div>
       </div>
     </section>
 
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Starter Project</div>
-          <div class="tag">Struktur Explorer</div>
+          <div class="tag">Designing Mode</div>
+          <div class="tag">Explorer Blueprint</div>
         </div>
         <div class="code-pill">Slide 3</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Struktur paling sederhana</h2>
-          <p>Supaya mudah untuk pemula, cukup pakai tiga part utama: satu part untuk soal, satu untuk jawaban benar, dan
-            satu untuk jawaban salah.</p>
+          <h2>Ayo Susun Blueprint-mu! 🏗️</h2>
+          <p>Sebagai Game Developer, kamu harus rapi. Yuk, buat struktur folder di <b>Explorer</b> kamu seperti ini
+            supaya script-nya tidak tertukar!</p>
         </div>
         <div class="grid-2">
           <div class="panel card">
-            <h3>Yang disiapkan guru</h3>
-            <div class="tree-box">Workspace
-              ├─ SpawnLocation
-              ├─ Quiz1 (Model)
-              │ ├─ Soal (Part)
-              │ │ └─ SurfaceGui
-              │ │ └─ TextLabel
-              │ ├─ Benar (Part)
-              │ │ └─ SurfaceGui
-              │ │ └─ TextLabel
-              │ ├─ Salah (Part)
-              │ │ └─ SurfaceGui
-              │ │ └─ TextLabel
-              │ └─ Script (opsional utama)
+            <h3>Susunan di Explorer</h3>
+            <p>Coba buat 3 Part, lalu ganti namanya (Rename) menjadi seperti ini:</p>
+            <div class="tree-box">
+              Workspace
+              ├─ 🚩 <b>SpawnLocation</b> (Tempat mulai)
+              ├─ 🧱 <b>Soal</b> (Tembok besar)
+              │ └─ SurfaceGui ➔ TextLabel
+              ├─ 🟩 <b>Benar</b> (Jalur tembus)
+              │ └─ SurfaceGui ➔ TextLabel
+              ├─ 🟥 <b>Salah</b> (Jalur jebakan)
+              │ └─ SurfaceGui ➔ TextLabel
+              └─ 🔥 <b>Rintangan</b> (Lava - Rintangan Tambahan)
             </div>
           </div>
           <div class="panel card">
-            <h3>Fungsi tiap object</h3>
+            <h3>Tugas Setiap Part</h3>
             <div class="pill-list">
-              <span><b>Soal</b> = papan pertanyaan</span>
-              <span><b>Benar</b> = tembok jawaban benar</span>
-              <span><b>Salah</b> = tembok jawaban salah</span>
-              <span><b>SpawnLocation</b> = tempat muncul lagi</span>
+              <span><b>Soal:</b> Papan pengumuman pertanyaanmu.</span>
+              <span><b>Benar:</b> Pintu ajaib yang bisa ditembus.</span>
+              <span><b>Salah:</b> Jebakan yang bikin pemain <i>respawn</i>.</span>
+              <span><b>Rintangan:</b> Rintangan tambahan yang membuat game lebih menantang.</span>
             </div>
-            <div class="compare">
-              <div class="col good">
-                <h4>Bagus untuk trial</h4>
-                <ul>
-                  <li>Nama object jelas</li>
-                  <li>Mudah dicari di Explorer</li>
-                  <li>Mudah ganti soal</li>
-                </ul>
-              </div>
-              <div class="col bad">
-                <h4>Hindari dulu</h4>
-                <ul>
-                  <li>Terlalu banyak part acak</li>
-                  <li>Nama object campur-campur</li>
-                  <li>Script terlalu banyak di awal</li>
-                </ul>
-              </div>
+
+            <div class="pro-tips">
+              <h4>💡 Pro-Tips Game Dev:</h4>
+              <ul class="check-list">
+                <li><b><i>Rename</i> adalah kunci:</b> Jangan biarkan namanya cuma "Part", nanti kamu bingung saat
+                  coding!
+                </li>
+                <li><b>Anchor:</b> Jangan lupa di-Anchor semua ya, supaya map kamu tidak "jatuh" saat game dimulai.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -1072,42 +1192,59 @@
       <div class="topbar">
         <div class="brand">
           <div class="tag">Langkah 1</div>
-          <div class="tag">Papan Soal</div>
+          <div class="tag">Tembok Soal</div>
         </div>
         <div class="code-pill">Slide 4</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Membuat tembok soal</h2>
-          <p>Pada part <b>Soal</b>, tambahkan <b>SurfaceGui</b> lalu isi <b>TextLabel</b>. Ini yang akan menampilkan
-            pertanyaan matematika.</p>
+          <h2>Membuat Tembok Soal</h2>
+          <p>Tembok soal adalah petunjuk utama bagi pemain. Yuk, ubah Part biasa jadi layar digital yang menampilkan
+            tantangan matematika!</p>
         </div>
         <div class="grid-2">
           <div class="step-card">
             <div class="step-no">1</div>
-            <h3>Siapkan part soal</h3>
-            <p>Buat part besar di depan jalur. Ubah namanya menjadi <b>Soal</b>. Pastikan <b>Anchored = true</b> supaya
-              tidak jatuh.</p>
-            <div class="pill-list"><span>Part</span><span>Anchored</span><span>Name = Soal</span></div>
+            <h3>Bangun Fondasi Tembok</h3>
+            <p>Munculkan Part, buat jadi lebar seperti tembok, dan <b>Rename</b> menjadi <b>Soal</b>.</p>
+            <div class="pill-list">
+              <span><b>Wajib:</b> Anchored = ON ✅</span>
+            </div>
+            <p class="small-note"><i><br>Tips: Atur warna tembok agar kontras dengan warna tulisan nanti.</i></p>
           </div>
           <div class="step-card">
             <div class="step-no">2</div>
-            <h3>Tambahkan tulisan</h3>
-            <p>Klik kanan part <b>Soal</b> → Insert Object → <b>SurfaceGui</b> → tambahkan <b>TextLabel</b>.</p>
-            <div class="code-box">Atur TextLabel:
-              TextScaled = true
-              BackgroundTransparency = 1
-              TextColor3 = warna gelap
-              Font = sesuai kebutuhan</div>
+            <h3>Pasang Layar Digital</h3>
+            <p>Klik tanda <b>(+)</b> pada part Soal, lalu tambahkan komponen ini secara berurutan:</p>
+
+            <pre class="code-box">
+              1. <b>SurfaceGui</b> (Sebagai Layar)<br>
+              2. <b>TextLabel</b> (Sebagai Tulisan)
+            </pre>
+
+            <div class="pro-tips-mini"> <br>
+              <b>⚙️ Pengaturan Wajib:</b>
+              <ul style="margin: 5px 0; padding-left: 20px;">
+                <li>Cari <b>Size</b>, ubah jadi: <span style="font-family: 'consolas';"><b>1, 0, 1, 0</b></span>
+                  (Supaya tulisan memenuhi seluruh papan!)
+                </li>
+                <li>Centang <b>TextScaled</b> agar otomatis besar.</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="panel card">
-          <h3>Script contoh untuk papan soal</h3>
-          <div class="code-title">Script di dalam TextLabel pada Soal</div>
-          <div class="code-box">local TextSign = script.Parent
-            local Part = script.Parent.Parent.Parent
 
-            TextSign.Text = "Rata-rata dari 6 dan 10 adalah..."</div>
+        <div class="panel card">
+          <h3>📜 Script: Mengisi Pertanyaan</h3>
+          <p>Masukkan <b>Script</b> ke dalam <b>TextLabel</b> kamu, lalu ketik kode "ajaib" ini:</p>
+          <div class="code-title">Script Papan Soal</div>
+          <pre class="code-box">
+            <b>local TextSign = script.Parent</b>
+
+            <i>-- Ganti teks di bawah ini sesuai soal yang kamu mau!</i>
+            <b>TextSign.Text = "</b>Rata-rata dari 6 dan 10 adalah...<b>"</b>
+          </pre>
+          <div class="quote-action">Ubah teks di dalam tanda kutip " " sesuai kreativitasmu!</div>
         </div>
       </div>
     </section>
@@ -1116,14 +1253,15 @@
       <div class="topbar">
         <div class="brand">
           <div class="tag">Langkah 2</div>
-          <div class="tag">Jawaban Benar</div>
+          <div class="tag">Tembok Jawaban Benar</div>
         </div>
         <div class="code-pill">Slide 5</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Membuat tembok jawaban benar</h2>
-          <p>Pada tembok jawaban benar, teks harus benar dan part harus bisa ditembus supaya pemain bisa lewat.</p>
+          <h2>Membuat Tembok Benar ✅</h2>
+          <p>Tembok ini akan menipu mata pemain! Kelihatannya padat, tapi karena jawabannya benar, pemain bisa
+            menembusnya seperti hantu.</p>
         </div>
         <div class="showcase">
           <div class="panel card mini-stage">
@@ -1136,18 +1274,32 @@
               <div class="body"></div>
             </div>
           </div>
-          <div class="panel card">
-            <h3>Yang harus diubah</h3>
-            <div class="pill-list"><span>Name = Benar</span><span>Jawaban = 8</span><span>CanCollide = false</span>
-            </div>
-            <div class="code-title">Script di dalam TextLabel pada Benar</div>
-            <div class="code-box">local TextSign = script.Parent
-              local Part = script.Parent.Parent.Parent
 
-              TextSign.Text = "8"
-              Part.CanCollide = false</div>
-            <p style="margin-top:12px;font-size:18px;line-height:1.45">Karena <b>CanCollide = false</b>, karakter bisa
-              menembus tembok ini. Ini menandakan pemain memilih jawaban yang benar.</p>
+          <div class="panel card">
+            <h3>Script Teks Jawaban Benar</h3>
+            <div class="pill-list">
+              <span><b>CanCollide = </b> false</span>
+            </div><br>
+
+            <div class="code-title">Script di dalam TextLabel (Benar)</div>
+
+            <pre class="code-box">
+          <b>local textSign = script.Parent</b>
+          <b>local Part = script.Parent.Parent.Parent</b>
+
+          <i>-- Masukkan jawaban yang benar</i>
+          <b>textSign.Text = "8"</b>
+
+          <i>-- Kode ajaib untuk membuat tembok bisa ditembus!</i>
+          <b>Part.CanCollide = false</b>
+        </pre>
+
+            <div class="pro-tips-mini" style="margin-top: 10px;">
+              <b>Logika Game:</b><br>
+              Saat <span style="font-family: 'consolas';">CanCollide</span> bernilai <span
+                style="font-family: 'consolas';">false</span>, benda tersebut tidak lagi memiliki tabrakan fisik. Itulah
+              kenapa kita bisa melewatinya!
+            </div>
           </div>
         </div>
       </div>
@@ -1157,42 +1309,49 @@
       <div class="topbar">
         <div class="brand">
           <div class="tag">Langkah 3</div>
-          <div class="tag">Jawaban Salah</div>
+          <div class="tag">Tembok Jawaban Salah</div>
         </div>
         <div class="code-pill">Slide 6</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Membuat tembok jawaban salah</h2>
-          <p>Pada tembok jawaban salah, part tetap padat dan diberi script sentuh. Saat pemain menyentuhnya, karakter
-            langsung mati lalu respawn.</p>
+          <h2>Bikin Tembok Salah 💀</h2>
+          <p>Hati-hati! Berbeda dengan tembok jawaban benar, tembok ini tetap padat. Jika pemain menyentuhnya, script
+            kita akan membuat karakter mereka kalah dan harus mengulang.</p>
         </div>
         <div class="grid-2">
           <div class="panel card">
-            <h3>Script teks jawaban salah</h3>
-            <div class="code-title">Script di dalam TextLabel pada Salah</div>
-            <div class="code-box">local TextSign = script.Parent
-              local Part = script.Parent.Parent.Parent
+            <h3>Script Teks Jawaban Salah</h3>
+            <div class="code-title">Script di dalam TextLabel (Salah)</div>
+            <pre class="code-box">
+              <b>local TextSign = script.Parent</b>
+              <b>local Part = script.Parent.Parent.Parent</b>
 
-              TextSign.Text = "7"</div>
+              <b>TextSign.Text = "7"</b>
+            </pre>
+
             <p style="margin-top:12px;font-size:18px;line-height:1.45">Untuk jawaban salah, tidak perlu mengubah
-              <b>CanCollide</b>. Biarkan part tetap padat.</p>
+              <b>CanCollide</b>. Biarkan part tetap padat.
+            </p>
           </div>
+
           <div class="panel card">
-            <h3>Script mematikan pemain</h3>
+            <h3>Script Mematikan Pemain</h3>
             <div class="code-title">Script di dalam part Salah</div>
-            <div class="code-box">local DamagePart = script.Parent
+            <pre class="code-box">
+              <b>local DamagePart = script.Parent</b>
 
-              local function Touch(otherPart)
-              local character = otherPart.Parent
-              local humanoid = character and character:FindFirstChild("Humanoid")
+              <b>local function Touch(otherPart)</b>
+              &nbsp;&nbsp;<b>local character = otherPart.Parent</b>
+              &nbsp;&nbsp;<b>local humanoid = character and &nbsp;&nbsp;&nbsp;&nbsp;character:FindFirstChild("Humanoid")</b>
 
-              if humanoid then
-              humanoid.Health = 0
-              end
-              end
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if humanoid then</b>
+                    <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;humanoid.Health = 0</b>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>end</b>
+              &nbsp;&nbsp;<b>end</b>
 
-              DamagePart.Touched:Connect(Touch)</div>
+              <b>DamagePart.Touched:Connect(Touch)</b>
+            </pre>
           </div>
         </div>
       </div>
@@ -1201,47 +1360,51 @@
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Urutan Kerja</div>
-          <div class="tag">Step by Step</div>
+          <div class="tag">Langkah Final</div>
+          <div class="tag">Checklist Kerja</div>
         </div>
         <div class="code-pill">Slide 7</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Urutan membuat obby quiz</h2>
-          <p>Ikuti urutan ini supaya hasilnya rapi dan tidak bingung saat mengetik script.</p>
+          <h2>Rencana Kerja Game Dev 🛠️</h2>
+          <p>Ikuti urutan ini supaya kuis kamu berjalan sempurna. Jangan sampai ada langkah yang terlewati!</p>
         </div>
         <div class="grid-3">
           <div class="step-card">
             <div class="step-no">1</div>
-            <h3>Buat jalur dan SpawnLocation</h3>
-            <p>Siapkan tempat mulai, jalur lurus, dan ruang untuk memasang dua tembok jawaban.</p>
+            <h3>Persiapkan Arena</h3>
+            <p>Pasang <b>SpawnLocation</b> dan buat jalur lurus untuk area kuis kamu.</p>
           </div>
           <div class="step-card">
             <div class="step-no">2</div>
-            <h3>Buat part Soal, Benar, Salah</h3>
-            <p>Ubah nama object dengan jelas supaya script mudah dipasang dan dicari.</p>
+            <h3>Susun Blueprint</h3>
+            <p>Buat 3 Part, <b>Rename</b> (Soal, Benar, Salah), dan wajib nyalakan <b>Anchor</b>.</p>
           </div>
           <div class="step-card">
             <div class="step-no">3</div>
-            <h3>Tambahkan SurfaceGui + TextLabel</h3>
-            <p>Pada ketiga part, buat tulisan yang menghadap ke arah pemain.</p>
+            <h3>Pasang Layar</h3>
+            <p>Tambahkan <b>SurfaceGui</b> dan <b>TextLabel</b> di setiap tembok jawaban.</p>
           </div>
           <div class="step-card">
             <div class="step-no">4</div>
-            <h3>Isi teks pertanyaan</h3>
-            <p>Ketikan soal pada part Soal dan isi pilihan jawaban pada part Benar dan Salah.</p>
+            <h3>Tulis Pertanyaan</h3>
+            <p>Gunakan script untuk mengisi teks soal dan pilihan jawabanmu.</p>
           </div>
           <div class="step-card">
             <div class="step-no">5</div>
-            <h3>Buat Benar bisa ditembus</h3>
-            <p>Pada script Benar, atur <b>Part.CanCollide = false</b>.</p>
+            <h3>Pintu Ajaib</h3>
+            <p>Pasang script <b>CanCollide = false</b> hanya di tembok jawaban yang benar.</p>
           </div>
           <div class="step-card">
             <div class="step-no">6</div>
-            <h3>Buat Salah mematikan</h3>
-            <p>Pada part Salah, pasang script Touched agar pemain mati saat memilih jawaban salah.</p>
+            <h3>Pasang Jebakan</h3>
+            <p>Gunakan event <b>Touched</b> di tembok salah agar pemain <i>respawn</i>.</p>
           </div>
+        </div>
+
+        <div class="pro-tips-mini" style="margin-top: 20px; text-align: center;">
+          <b>🚀 Tips:</b> Setelah langkah 6 selesai, langsung klik tombol <b>Play</b> untuk mencoba kuis buatanmu!
         </div>
       </div>
     </section>
@@ -1249,26 +1412,32 @@
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Aktivitas</div>
-          <div class="tag">Interactive Check</div>
+          <div class="tag">Quick Check</div>
+          <div class="tag">Logic Challenge</div>
         </div>
         <div class="code-pill">Slide 8</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Klik jawaban yang benar</h2>
-          <p>Part mana yang harus diberi <b>CanCollide = false</b> supaya pemain bisa menembus jalur yang benar?</p>
+          <h2>Uji Logika Kamu! 🧠</h2>
+          <p>Ayo tebak! Part mana yang harus kita atur menjadi <span style="font-family: 'consolas';"><b>CanCollide =
+                false</b></span> agar pemain bisa melewatinya?</p>
         </div>
+
         <div class="interactive-grid" id="quiz1">
           <button class="choice" data-correct="false">Part Soal</button>
           <button class="choice" data-correct="true">Part Benar</button>
           <button class="choice" data-correct="false">Part Salah</button>
         </div>
-        <div class="feedback" id="feedback1">Klik salah satu pilihan.</div>
+        <div class="feedback" id="feedback1">Pilih salah satu untuk cek jawabanmu!</div>
+
         <div class="panel card">
-          <h3>Ingat logikanya</h3>
-          <p><b>Benar</b> harus bisa ditembus, jadi part-nya tidak bertabrakan. <b>Salah</b> tetap padat dan diberi
-            script agar pemain mati saat menyentuhnya.</p>
+          <h3>💡 Tips Pengingat</h3>
+          <p>
+            Ingat rumus rahasianya: <br>
+            • <b>Benar:</b> harus bisa ditembus, jadi part-nya tidak bertabrakan. <br>
+            • <b>Salah:</b> Tetap padat dan diberi script agar pemain mati saat menyentuhnya.
+          </p>
         </div>
       </div>
     </section>
@@ -1276,153 +1445,174 @@
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Aktivitas</div>
-          <div class="tag">Urutkan Langkah</div>
+          <div class="tag">Final Challenge</div>
+          <div class="tag">Game Workflow</div>
         </div>
         <div class="code-pill">Slide 9</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Urutkan langkah pembuatan game</h2>
-          <p>Klik tombol di bawah sesuai urutan yang paling masuk akal. Reset dengan double click pada kotak feedback.
+          <h2>Jadi Game Director: Urutkan Langkahmu! 🎬</h2>
+          <p>Jangan terjebak! Klik tombol di bawah sesuai urutan proses pembuatan kuis yang benar dari awal sampai
+            akhir.</p>
+        </div>
+
+        <div class="interactive-grid" id="sortButtons">
+          <button class="sort-btn" data-value="3">📜 Tulis Script & Logika</button>
+          <button class="sort-btn" data-value="1">🧱 Susun Blueprint Part</button>
+          <button class="sort-btn" data-value="4">🚀 Uji Coba (Play Test)</button>
+          <button class="sort-btn" data-value="2">🖼️ Pasang Layar (SurfaceGui)</button>
+        </div>
+
+        <div class="sort-zone" id="sortZone"></div>
+
+        <div class="sort-feedback" id="sortFeedback">
+          Klik tombol di atas untuk menyusun langkah kerjamu!
+        </div>
+
+        <div class="panel card" style="margin-top: 20px;">
+          <p>💡 <b>Instruksi:</b> Urutkan dari langkah yang paling awal dilakukan. Kalau salah klik, cukup
+            <b>double-click</b> pada kotak teks di atas untuk mengulang.
           </p>
         </div>
-        <div class="interactive-grid" id="sortButtons">
-          <button class="sort-btn" data-value="3">Pasang script sentuh pada part Salah</button>
-          <button class="sort-btn" data-value="1">Buat part Soal, Benar, dan Salah</button>
-          <button class="sort-btn" data-value="2">Tambahkan SurfaceGui dan TextLabel</button>
-          <button class="sort-btn" data-value="4">Uji game dengan Play</button>
-        </div>
-        <div class="sort-zone" id="sortZone"></div>
-        <div class="sort-feedback" id="sortFeedback">Urutan pilihanmu akan muncul di sini.</div>
       </div>
     </section>
 
     <section class="slide">
       <div class="topbar">
         <div class="brand">
-          <div class="tag">Checklist</div>
-          <div class="tag">Sebelum Test</div>
+          <div class="tag">Pre-Flight Check</div>
+          <div class="tag">Siap Rilis?</div>
         </div>
         <div class="code-pill">Slide 10</div>
       </div>
       <div class="content">
         <div class="title-wrap">
-          <h2>Cek proyekmu sebelum mencoba</h2>
-          <p>Klik setiap kotak saat sudah selesai dicek.</p>
+          <h2>Quality Control: Cek Sebelum Launch! 🚀</h2>
+          <p>Satu kesalahan kecil bisa bikin game kamu <i>bug</i>. Klik kotak di bawah kalau kamu sudah yakin langkahnya
+            benar!</p>
         </div>
         <div class="checklist">
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>Nama part sudah benar</b><span>Ada <b>Soal</b>, <b>Benar</b>, dan <b>Salah</b>.</span></div>
+            <div><b>Blueprint Explorer Rapi</b><span>Nama <b>Soal</b>, <b>Benar</b>, dan <b>Salah</b> sudah diketik
+                dengan benar (besar-kecil huruf berpengaruh!).</span></div>
           </div>
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>Teks sudah muncul</b><span>SurfaceGui dan TextLabel tampil menghadap pemain.</span></div>
+            <div><b>Layar Digital Aktif</b><span>SurfaceGui dan TextLabel sudah muncul dan tidak terbalik (menghadap ke
+                arah pemain).</span></div>
           </div>
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>Jawaban benar bisa ditembus</b><span>Script pada part Benar memakai <b>Part.CanCollide =
-                  false</b>.</span></div>
+            <div><b>Sistem Pintu Ajaib</b><span>Script pada part <b>Benar</b> sudah menggunakan
+                <code>CanCollide = false</code>.</span></div>
           </div>
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>Jawaban salah membuat mati</b><span>Part Salah sudah punya script <b>Touched</b>.</span></div>
+            <div><b>Sistem Jebakan (Kill)</b><span>Part <b>Salah</b> sudah punya script <code>Touched</code> dan
+                fungsinya sudah tertutup rapi.</span></div>
           </div>
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>SpawnLocation ada</b><span>Setelah mati, pemain bisa muncul kembali dari awal.</span></div>
+            <div><b>Titik Respawn Aman</b><span><b>SpawnLocation</b> sudah terpasang agar pemain tidak jatuh ke luar
+                angkasa saat mulai.</span></div>
           </div>
           <div class="check-item">
             <div class="check-box"></div>
-            <div><b>Semua part anchored</b><span>Part tidak jatuh atau bergerak saat game dijalankan.</span></div>
+            <div><b>Anti-Gravitasi (Anchor) ⚓</b><span>Semua Part sudah di-<b>Anchor</b>. Jangan sampai map kamu hancur
+                karena gravitasi!</span></div>
           </div>
+        </div>
+
+        <div class="pro-tips-mini" style="margin-top: 20px; background: var(--mint);">
+          <b>Ready to Play?</b> Jika semua kotak sudah tercentang, saatnya tekan tombol <b>Play</b> dan jadilah orang
+          pertama yang menamatkan game buatanmu!
         </div>
       </div>
     </section>
 
-    <section class="slide">
-      <div class="topbar">
-        <div class="brand">
-          <div class="tag">Bonus</div>
-          <div class="tag">Pengembangan</div>
+   <section class="slide">
+  <div class="topbar">
+    <div class="brand">
+      <div class="tag">The Next Level</div>
+      <div class="tag">Upgrade Your Obby</div>
+    </div>
+    <div class="code-pill">Slide 11</div>
+  </div>
+  <div class="content">
+    <div class="title-wrap">
+      <h2>Obby Kamu Bisa Jauh Lebih Keren! 🚀</h2>
+      <p>Hari ini kamu sudah berhasil bikin 1 gerbang. Bayangkan kalau Obby kuis kamu punya 50 level dengan fitur-fitur pro ini!</p>
+    </div>
+    <div class="grid-2">
+      <div class="panel card">
+        <h3>🔥 Upgrade Gameplay</h3>
+        <p>Bikin kuis kamu jadi lebih menantang dan interaktif:</p>
+        <div class="pill-list">
+          <span>🌀 <b>Moving Gates:</b> Tembok jawaban yang bergerak & berputar.</span>
+          <span>⏲️ <b>Time Attack:</b> Pemain harus jawab sebelum waktu habis!</span>
+          <span>🌈 <b>Effect Shop:</b> Pakai koin hasil kuis untuk beli efek karakter.</span>
+          <span>⚡ <b>Power Ups:</b> Jawaban benar kasih kecepatan (Speed) tambahan.</span>
         </div>
-        <div class="code-pill">Slide 11</div>
       </div>
-      <div class="content">
-        <div class="title-wrap">
-          <h2>Kalau sudah selesai, bisa tambah apa?</h2>
-          <p>Setelah versi dasar jadi, siswa bisa mengembangkan gamenya sedikit demi sedikit.</p>
-        </div>
-        <div class="grid-2">
-          <div class="panel card">
-            <h3>Ide pengembangan mudah</h3>
-            <div class="pill-list">
-              <span>Tambah soal kedua</span>
-              <span>Buat checkpoint setelah benar</span>
-              <span>Tambah dekorasi map</span>
-              <span>Ganti warna jalur</span>
-              <span>Tambah papan Finish</span>
-            </div>
-          </div>
-          <div class="panel card">
-            <h3>Ide pengembangan menengah</h3>
-            <div class="pill-list">
-              <span>Acak posisi kanan-kiri</span>
-              <span>Buat banyak gate berurutan</span>
-              <span>Tambahkan sound</span>
-              <span>Tambah efek benar / salah</span>
-              <span>Pakai soal operasi lain</span>
-            </div>
-          </div>
-        </div>
-        <div class="quote">Programmer tidak harus langsung membuat game besar. Mulai dari satu gate yang bekerja, lalu
-          tambah satu per satu.</div>
+      <div class="panel card" style="background: var(--mint);">
+        <h3>🛠️ Rahasia Pro Developer</h3>
+        <p>Di kelas regular, kamu akan bongkar logika keren ini:</p>
+        <ul class="check-list">
+          <li><b>DataStore:</b> Simpan skor & level pemain biar gak hilang.</li>
+          <li><b>Global Leaderboard:</b> Pajang nama pemain paling pintar di server!</li>
+          <li><b>Advanced Scripting:</b> Pakai <i>Variables</i> & <i>Functions</i> tingkat lanjut.</li>
+          <li><b>Particle Effects:</b> Ledakan kembang api tiap kali jawaban benar.</li>
+        </ul>
       </div>
-    </section>
+    </div>
+    
+    <div class="pro-tips-mini" style="margin-top: 25px; text-align: center; border: 2px solid var(--green);">
+      <h3 style="margin-bottom: 5px; color: var(--green-deep);">Jangan Biarkan Kuis Kamu Berhenti di Sini! 🏁</h3>
+      <p>Ayo gabung di <b>Kelas Regular</b> untuk lanjutin bangun Obby-mu sampai jadi game viral di Roblox!</p>
+    </div>
+  </div>
+</section>
 
     <section class="slide">
-      <div class="topbar">
-        <div class="brand">
-          <div class="logo-pill">ruangguru CODING</div>
-          <div class="logo-pill">Kalananti by Ruangguru</div>
-        </div>
-        <div class="code-pill">Slide 12</div>
+  <div class="topbar">
+    <div class="brand">
+      <div class="tag">Final Step</div>
+      <div class="tag">Become a Developer</div>
+    </div>
+    <div class="code-pill">Join Us!</div>
+  </div>
+  <div class="content">
+    <div class="promo-container">
+      <div class="promo-image">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/23eba63a-a6e8-47f6-bf5e-d36c2be315c2.jpeg" alt="Roblox Promo Poster" style="border-radius: 20px; box-shadow: var(--shadow); max-height: 480px;">
       </div>
-      <div class="hero">
-        <div class="hero-panel">
-          <div class="eyebrow">Closing</div>
-          <h1 style="font-size:58px">Obby Quiz</h1>
-          <div class="hero-sub">Siap dicoba di Roblox Studio</div>
-          <p class="lead">Sekarang siswa sudah tahu cara membuat papan soal, memilih jawaban lewat jalur kanan-kiri, dan
-            memberi aturan benar atau salah dengan script sederhana.</p>
-          <div class="big-stat-grid">
-            <div class="stat"><b>Sudah Bisa</b><span>Menampilkan soal pada tembok</span></div>
-            <div class="stat"><b>Sudah Bisa</b><span>Membuat jawaban benar bisa ditembus</span></div>
-            <div class="stat"><b>Sudah Bisa</b><span>Membuat jawaban salah mematikan pemain</span></div>
-            <div class="stat"><b>Next Step</b><span>Tambah lebih banyak gate dan tantangan</span></div>
-          </div>
+
+      <div class="promo-details">
+        <h2>Siap Bikin Game Viralmu Sendiri? 🚀</h2>
+        <p>Bergabunglah dengan ratusan teman lainnya di program <b>Game Developer</b> dan kuasai Roblox Studio secara total!</p>
+        
+        <div class="benefits-box">
+          <h4>Apa yang akan kamu kuasai?</h4>
+          <ul>
+            <li>✨ <b>Game Design:</b> Bikin map kelas dunia.</li>
+            <li>📜 <b>Logic & Programming:</b> Jago koding Lua.</li>
+            <li>🎨 <b>UI/UX:</b> Bikin tampilan game yang estetik.</li>
+            <li>💡 <b>Problem Solving:</b> Berpikir ala programmer.</li>
+          </ul>
         </div>
-        <div class="visual card">
-          <div class="bubble b1"></div>
-          <div class="bubble b2"></div>
-          <div class="bubble b3"></div>
-          <div class="bubble b4"></div>
-          <div class="question-board" style="top:44px;width:76%">Berapakah keliling persegi dengan sisi 6 cm?</div>
-          <div class="wall-l" style="bottom:120px">12</div>
-          <div class="wall-r" style="bottom:120px">24</div>
-          <div class="path" style="bottom:80px"></div>
-          <div class="avatar" style="bottom:98px">
-            <div class="head"></div>
-            <div class="body"></div>
-          </div>
+
+        <div class="next-step-badge">
+          <p>Tanya Guru/Instruktur kamu di kelas untuk cara pendaftarannya ya!</p>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <div class="footer-nav">
       <div class="dots" id="dots"></div>
-      <div class="small">Navigasi: <span class="kbd">←</span> <span class="kbd">→</span></div>
       <div class="nav-controls">
         <button class="nav-btn" id="prevBtn">← Sebelumnya</button>
         <button class="nav-btn primary" id="nextBtn">Berikutnya →</button>
@@ -1448,16 +1638,33 @@
     });
 
     function updateSlides() {
-      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === current);
+        if (i !== current) s.scrollTop = 0;
+      });
+
+      slides[current].scrollTop = 0;
+
       [...dotsWrap.children].forEach((d, i) => d.classList.toggle('active', i === current));
       prevBtn.disabled = current === 0;
       nextBtn.disabled = current === slides.length - 1;
       prevBtn.style.opacity = current === 0 ? .5 : 1;
       nextBtn.style.opacity = current === slides.length - 1 ? .5 : 1;
     }
-    function goTo(i) { current = Math.max(0, Math.min(slides.length - 1, i)); updateSlides(); }
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
+
+    function goTo(i) {
+      current = Math.max(0, Math.min(slides.length - 1, i)); updateSlides();
+    }
+
+    function next() {
+      goTo(current + 1);
+
+    }
+
+    function prev() {
+      goTo(current - 1);
+
+    }
 
     prevBtn.addEventListener('click', prev);
     nextBtn.addEventListener('click', next);
