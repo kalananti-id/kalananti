@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Math to Code - Scratch Interactive Slides</title>
+  <style>
+    :root{
+      --bg:#f5f7f6;
+      --mint:#eaf9f3;
+      --mint-2:#dff6ee;
+      --green:#4f9677;
+      --green-dark:#1f5b47;
+      --green-deep:#184d3b;
+      --aqua:#a9eef2;
+      --peach:#f4cbb4;
+      --peach-2:#efb67f;
+      --yellow:#ffc94d;
+      --ink:#27483b;
+      --shadow:0 16px 40px rgba(39,72,59,.14);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#dfe7e6;font-family:Arial,"Trebuchet MS",sans-serif;color:var(--ink);overflow:hidden}
+    body{
+      background:
+        radial-gradient(circle at 10% 10%, rgba(244,203,180,.35) 0 2%, transparent 2.2%),
+        radial-gradient(circle at 93% 9%, rgba(169,238,242,.95) 0 6%, rgba(169,238,242,.35) 6.2% 10%, transparent 10.2%),
+        radial-gradient(circle at 22% 88%, rgba(255,201,77,.3) 0 3%, transparent 3.1%),
+        linear-gradient(135deg, #f6f7f7 0%, #f6f7f7 42%, #edf9f4 42%, #edf9f4 100%);
+    }
+
+    .deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+    .slide{
+      position:absolute; inset:0; padding:34px 44px 88px;
+      display:grid; grid-template-rows:auto 1fr; gap:20px;
+      opacity:0; transform:translateX(60px) scale(.98); pointer-events:none;
+      transition:all .45s ease;
+    }
+    .slide.active{opacity:1; transform:translateX(0) scale(1); pointer-events:auto}
+
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .logo-pill, .code-pill, .tag{
+      border-radius:999px; padding:10px 16px; font-weight:800;
+      box-shadow:var(--shadow); background:white; border:2px solid rgba(79,150,119,.18);
+    }
+    .logo-pill{color:var(--green-dark); background:rgba(255,255,255,.92)}
+    .code-pill{background:var(--mint); color:var(--green-deep)}
+    .tag{background:var(--aqua); color:var(--green-deep); border-color:rgba(31,91,71,.12); font-size:14px}
+
+    .card{
+      background:rgba(255,255,255,.9);
+      border:2px solid rgba(79,150,119,.15);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;height:100%}
+    .hero-panel{padding:28px 34px}
+    .eyebrow{display:inline-block;padding:10px 16px;border-radius:999px;background:var(--peach);font-weight:800;margin-bottom:16px}
+    h1,h2,h3,p{margin:0}
+    h1{
+      font-size:72px; line-height:.95; letter-spacing:-2px; color:#fff;
+      text-shadow:
+        0 4px 0 var(--green-dark),
+        0 9px 0 var(--green-deep),
+        0 0 0 transparent;
+      -webkit-text-stroke: 10px rgba(79,150,119,.18);
+      paint-order: stroke fill;
+      margin-bottom:20px;
+    }
+    .hero-sub{font-size:28px;font-weight:900;color:var(--green);margin-bottom:16px}
+    .lead{font-size:22px;line-height:1.45;max-width:760px}
+    .big-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+    .stat{padding:18px 18px 16px;background:var(--mint);border-radius:24px;border:2px solid rgba(79,150,119,.12)}
+    .stat b{display:block;font-size:28px;color:var(--green-deep);margin-bottom:6px}
+    .stat span{font-size:16px;line-height:1.35}
+
+    .visual{
+      position:relative; min-height:520px; padding:26px;
+      background:linear-gradient(160deg, rgba(234,249,243,.85), rgba(255,255,255,.92));
+      overflow:hidden;
+    }
+    .bubble{position:absolute;border-radius:50%}
+    .b1{width:170px;height:170px;background:rgba(169,238,242,.9);right:-18px;top:-16px}
+    .b2{width:52px;height:52px;background:rgba(244,203,180,.85);left:30px;top:100px}
+    .b3{width:26px;height:26px;background:rgba(255,201,77,.75);right:120px;top:164px}
+    .b4{width:92px;height:92px;background:rgba(79,150,119,.18);right:30px;bottom:34px}
+    .device, .block, .number-card{position:absolute;border-radius:22px;box-shadow:var(--shadow)}
+    .device{right:40px;bottom:42px;width:310px;height:220px;background:#fff;border:3px solid rgba(79,150,119,.18);padding:20px}
+    .device .screen{width:100%;height:100%;background:linear-gradient(180deg,#ddf6ea,#c9efde);border-radius:18px;padding:14px;position:relative;border:2px solid #bfe4d4}
+    .hud{display:flex;justify-content:space-between;font-weight:800;font-size:14px}
+    .hud span{background:#fff;padding:6px 10px;border-radius:999px;border:2px solid #dbece4}
+    .math-row{display:flex;justify-content:center;gap:10px;margin-top:24px}
+    .math-box{width:54px;height:54px;border:3px solid #111;background:#fff;display:grid;place-items:center;font-size:32px}
+    .answers{display:flex;justify-content:center;gap:12px;position:absolute;left:12px;right:12px;bottom:18px}
+    .answers div{width:62px;height:54px;border:3px solid #111;background:#fff;display:grid;place-items:center;font-size:28px}
+    .block{padding:16px 18px;font-weight:800;color:#fff}
+    .block.yellow{background:#ffbf2e;left:36px;bottom:128px;width:180px}
+    .block.purple{background:#8f63db;left:96px;bottom:76px;width:170px}
+    .block.blue{background:#5bb5e6;left:146px;bottom:24px;width:210px}
+    .number-card{left:40px;top:32px;width:270px;padding:22px;background:#fff}
+    .number-card h3{font-size:22px;margin-bottom:12px;color:var(--green-deep)}
+    .number-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .number-list div{padding:12px;border-radius:16px;background:var(--mint);text-align:center;font-weight:800}
+
+    .content{display:grid;gap:20px;height:100%}
+    .title-wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+    .title-wrap h2{font-size:46px;color:var(--green-deep);letter-spacing:-1px}
+    .title-wrap p{font-size:20px;max-width:650px;line-height:1.45}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .panel{padding:24px}
+    .panel h3{font-size:26px;color:var(--green-deep);margin-bottom:14px}
+    .panel p{font-size:19px;line-height:1.5}
+    .pill-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+    .pill-list span{padding:10px 14px;border-radius:999px;background:var(--mint);font-weight:800;border:2px solid rgba(79,150,119,.14)}
+
+    .step-card{padding:22px;border-radius:26px;background:#fff;border:2px solid rgba(79,150,119,.14);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .step-card::after{content:"";position:absolute;inset:auto -10px -10px auto;width:82px;height:82px;border-radius:24px;background:rgba(169,238,242,.35);transform:rotate(16deg)}
+    .step-no{width:52px;height:52px;border-radius:18px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:900;margin-bottom:14px}
+    .step-card h3{font-size:24px;margin-bottom:10px;color:var(--green-deep)}
+    .step-card p{font-size:18px;line-height:1.45}
+
+    .code-box{margin-top:14px;padding:14px 16px;background:#f7fbf9;border-radius:18px;border:2px dashed rgba(79,150,119,.18);font-family:"Courier New",monospace;font-size:17px;line-height:1.55;white-space:pre-line}
+
+    .interactive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+    .choice, .sort-btn{
+      padding:20px;border-radius:24px;background:#fff;border:3px solid rgba(79,150,119,.16);cursor:pointer;
+      box-shadow:var(--shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease;
+      font-size:20px;font-weight:800;text-align:left;color:var(--green-deep)
+    }
+    .choice:hover,.sort-btn:hover{transform:translateY(-4px);border-color:rgba(79,150,119,.5)}
+    .choice.correct{background:var(--mint);border-color:var(--green)}
+    .choice.wrong{background:#fff3ef;border-color:#ea8e65}
+    .feedback, .sort-feedback{
+      min-height:54px;margin-top:14px;padding:14px 18px;border-radius:18px;
+      font-size:20px;font-weight:800;background:#fff;border:2px dashed rgba(79,150,119,.18)
+    }
+
+    .sort-zone{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px;border-radius:20px;background:var(--mint)}
+    .sort-chip{padding:10px 14px;border-radius:999px;background:#fff;border:2px solid rgba(79,150,119,.16);font-weight:800}
+
+    .checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
+    .check-item{
+      display:flex;gap:12px;align-items:flex-start;padding:18px;background:#fff;border-radius:22px;border:2px solid rgba(79,150,119,.12);
+      box-shadow:var(--shadow);cursor:pointer
+    }
+    .check-box{width:30px;height:30px;border-radius:10px;border:3px solid var(--green);display:grid;place-items:center;font-weight:900;color:#fff;flex:0 0 30px}
+    .check-item.done .check-box{background:var(--green)}
+    .check-item b{display:block;margin-bottom:5px;font-size:20px;color:var(--green-deep)}
+    .check-item span{font-size:17px;line-height:1.4}
+
+    .footer-nav{
+      position:absolute;left:34px;right:34px;bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:18px;z-index:5
+    }
+    .dots{display:flex;gap:8px;flex-wrap:wrap}
+    .dot{width:14px;height:14px;border-radius:999px;background:rgba(79,150,119,.24);transition:all .2s ease}
+    .dot.active{width:36px;background:var(--green)}
+    .nav-controls{display:flex;gap:12px}
+    .nav-btn{
+      border:none;border-radius:999px;padding:14px 18px;font-size:18px;font-weight:900;cursor:pointer;
+      background:#fff;color:var(--green-deep);box-shadow:var(--shadow);border:2px solid rgba(79,150,119,.14)
+    }
+    .nav-btn.primary{background:var(--green);color:#fff}
+
+    .kbd{padding:5px 9px;border-radius:10px;background:#fff;border:2px solid rgba(79,150,119,.14);font-weight:900}
+    .small{font-size:16px;opacity:.9}
+
+    .showcase{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;height:100%}
+    .mini-stage{padding:22px;background:linear-gradient(180deg,#dff6ee,#bfe7d8);min-height:300px;position:relative;overflow:hidden}
+    .floating{position:absolute;width:70px;height:58px;border:3px solid #111;background:#fff;display:grid;place-items:center;font-size:28px;font-weight:800}
+    .floating.a{left:18px;bottom:20px}
+    .floating.b{left:140px;bottom:74px}
+    .floating.c{right:26px;bottom:26px}
+    .floating.d{right:148px;bottom:90px}
+
+    .quote{padding:22px 24px;background:var(--peach);border-radius:28px;font-size:28px;font-weight:900;line-height:1.35;color:var(--green-deep)}
+
+    @media (max-width: 1100px){
+      .hero,.showcase,.grid-2,.grid-3,.interactive-grid,.checklist{grid-template-columns:1fr}
+      h1{font-size:58px}
+      .slide{padding:24px 24px 94px}
+      .title-wrap h2{font-size:36px}
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+
+    <section class="slide active">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo-pill">ruangguru CODING</div>
+          <div class="logo-pill">Kalananti by Ruangguru</div>
+          <div class="logo-pill">STEM</div>
+        </div>
+        <div class="code-pill">Kode Akses: MTC-SCR-25</div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-panel">
+          <div class="eyebrow">Interactive Slides • Trial Class 60 Menit</div>
+          <h1>Math to Code</h1>
+          <div class="hero-sub">Scratch Edition</div>
+          <p class="lead">Belajar matematika sambil membuat game sederhana. Hari ini siswa tidak mulai dari layar kosong, tapi melengkapi starter project supaya bisa langsung fokus ke logika dan hasil akhirnya.</p>
+          <div class="big-stat-grid">
+            <div class="stat"><b>Target</b><span>Siswa SD yang baru mulai kenal coding</span></div>
+            <div class="stat"><b>Output</b><span>Game kuis matematika dengan skor dan timer</span></div>
+            <div class="stat"><b>Fokus</b><span>Angka acak, jawaban benar, dan interaksi klik</span></div>
+            <div class="stat"><b>Gaya Belajar</b><span>Step by step, visual, dan langsung praktik</span></div>
+          </div>
+        </div>
+
+        <div class="visual card">
+          <div class="bubble b1"></div>
+          <div class="bubble b2"></div>
+          <div class="bubble b3"></div>
+          <div class="bubble b4"></div>
+          <div class="number-card">
+            <h3>Hari ini kita bikin</h3>
+            <div class="number-list">
+              <div>Soal Acak</div>
+              <div>Score</div>
+              <div>Timer</div>
+              <div>Pilih Jawaban</div>
+            </div>
+          </div>
+          <div class="block yellow">when green flag clicked</div>
+          <div class="block purple">set Score to 0</div>
+          <div class="block blue">broadcast [Soal Baru]</div>
+          <div class="device">
+            <div class="screen">
+              <div class="hud"><span>Score 3</span><span>Timer 27</span></div>
+              <div class="math-row">
+                <div class="math-box">6</div>
+                <div class="math-box">+</div>
+                <div class="math-box">5</div>
+                <div class="math-box">=</div>
+              </div>
+              <div class="answers">
+                <div>12</div>
+                <div>11</div>
+                <div>8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Tujuan Kelas</div>
+          <div class="tag">Kenalan Scratch</div>
+          <div class="tag">Math + Logic</div>
+        </div>
+        <div class="code-pill">Slide 2</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Apa yang akan dipelajari?</h2>
+            <p>Di kelas ini siswa belajar bahwa coding bukan cuma mengetik, tapi juga menyusun langkah agar komputer bisa menghitung dan memberi respons.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="step-card">
+            <div class="step-no">1</div>
+            <h3>Mengacak angka</h3>
+            <p>Siswa melihat bahwa sprite bisa menampilkan angka berbeda setiap kali soal baru dimulai.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">2</div>
+            <h3>Menyimpan jawaban</h3>
+            <p>Siswa menggunakan variabel <b>Answer</b> untuk menyimpan hasil hitungan dari soal.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">3</div>
+            <h3>Membuat game interaktif</h3>
+            <p>Siswa menambah skor saat jawaban benar dan melihat hasilnya langsung di layar.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Konsep matematika</h3>
+            <div class="pill-list">
+              <span>Penjumlahan</span>
+              <span>Angka 1–10</span>
+              <span>Hasil hitung</span>
+              <span>Pilih jawaban</span>
+            </div>
+          </div>
+          <div class="panel card">
+            <h3>Konsep coding</h3>
+            <div class="pill-list">
+              <span>Event</span>
+              <span>Variable</span>
+              <span>Random</span>
+              <span>If</span>
+              <span>Broadcast</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Starter Project</div>
+          <div class="tag">Tidak dari Nol</div>
+        </div>
+        <div class="code-pill">Slide 3</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Kenapa pakai starter project?</h2>
+            <p>Karena trial class harus terasa seru dan berhasil. Jadi beberapa bagian sudah disiapkan, lalu siswa melengkapi bagian inti yang benar-benar menunjukkan logika coding.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Sudah disiapkan</h3>
+            <p>Backdrop, posisi sprite, tampilan skor, tampilan timer, dan struktur awal game. Jadi siswa bisa langsung masuk ke bagian yang paling penting.</p>
+            <div class="code-box">✓ Stage dan backdrop
+✓ Sprite angka dan operator
+✓ Variabel Score, Timer, Answer
+✓ Tombol mulai dan alur dasar game</div>
+          </div>
+          <div class="panel card">
+            <h3>Dikerjakan siswa</h3>
+            <p>Siswa tetap membuat bagian coding yang bermakna, seperti mengacak angka, menghitung hasil, dan menentukan apa yang terjadi saat jawaban diklik.</p>
+            <div class="code-box">✓ Random angka
+✓ Set Answer
+✓ Isi pilihan jawaban
+✓ Klik benar = skor bertambah</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Project Flow</div>
+        </div>
+        <div class="code-pill">Slide 4</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Alur game yang akan kita buat</h2>
+            <p>Lihat alurnya dulu, supaya siswa paham kenapa setiap blok itu dibutuhkan.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="step-card">
+            <div class="step-no">A</div>
+            <h3>Game dimulai</h3>
+            <p>Score di-reset, timer berjalan, lalu game mengirim pesan untuk membuat soal baru.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">B</div>
+            <h3>Soal muncul</h3>
+            <p>Angka pertama dan kedua diacak. Operator ditampilkan, lalu hasilnya disimpan di variabel Answer.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">C</div>
+            <h3>Pemain memilih</h3>
+            <p>Kalau klik jawaban benar, skor bertambah. Setelah itu muncul soal baru sampai timer habis.</p>
+          </div>
+        </div>
+
+        <div class="quote">“Coding itu menyusun langkah. Kalau langkahnya rapi, game-nya juga akan bekerja dengan rapi.”</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Misi 1</div>
+          <div class="tag">Random Angka</div>
+        </div>
+        <div class="code-pill">Slide 5</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Misi 1 — Membuat soal acak</h2>
+            <p>Siswa menambahkan blok agar Number 1 dan Number 2 berubah menjadi angka acak setiap kali menerima pesan <b>Soal Baru</b>.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Contoh logika</h3>
+            <div class="code-box">when I receive [Soal Baru]
+switch costume to (pick random 1 to 10)</div>
+            <p style="margin-top:12px">Blok ini bisa dipakai untuk sprite Number 1 dan Number 2.</p>
+          </div>
+          <div class="panel card">
+            <h3>Checkpoint</h3>
+            <p>Saat tombol green flag ditekan dan game berjalan, angka di layar harus berubah-ubah setiap soal baru muncul.</p>
+            <div class="pill-list">
+              <span>Angka 1 berubah</span>
+              <span>Angka 2 berubah</span>
+              <span>Masih pakai +</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Misi 2</div>
+          <div class="tag">Answer</div>
+        </div>
+        <div class="code-pill">Slide 6</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Misi 2 — Menghitung jawaban benar</h2>
+            <p>Setelah dua angka muncul, game perlu tahu jawaban yang benar. Di sinilah variabel <b>Answer</b> dipakai.</p>
+          </div>
+        </div>
+
+        <div class="showcase">
+          <div class="panel card">
+            <h3>Blok inti</h3>
+            <div class="code-box">when I receive [Soal Baru]
+set [Answer v] to ((costume name of Number 1) + (costume name of Number 2))</div>
+            <p style="margin-top:14px">Bisa dijelaskan ke siswa: komputer juga perlu “menyimpan hasil hitung” supaya nanti bisa membandingkan mana jawaban yang benar.</p>
+          </div>
+          <div class="mini-stage card">
+            <div class="math-row" style="margin-top:16px">
+              <div class="math-box">4</div>
+              <div class="math-box">+</div>
+              <div class="math-box">3</div>
+              <div class="math-box">=</div>
+            </div>
+            <div style="margin-top:42px;text-align:center;font-size:26px;font-weight:900;color:var(--green-deep)">Answer disimpan sebagai <span style="background:#fff;padding:10px 16px;border-radius:14px;border:2px solid rgba(79,150,119,.16)">7</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Misi 3</div>
+          <div class="tag">Pilih Jawaban</div>
+        </div>
+        <div class="code-pill">Slide 7</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Misi 3 — Menampilkan pilihan jawaban</h2>
+            <p>Untuk trial class, tiga jawaban dibuat dengan tiga sprite tetap: Choice A, Choice B, dan Choice C. Cara ini lebih ringan daripada clone.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="step-card">
+            <div class="step-no">A</div>
+            <h3>Choice A</h3>
+            <p>Salah satu pilihan diisi dengan nilai <b>Answer</b>.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">B</div>
+            <h3>Choice B</h3>
+            <p>Diisi angka pengecoh, misalnya <b>Answer + 1</b>.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">C</div>
+            <h3>Choice C</h3>
+            <p>Diisi angka pengecoh lain, misalnya <b>Answer - 1</b>.</p>
+          </div>
+        </div>
+
+        <div class="panel card">
+          <h3>Tips fasilitasi</h3>
+          <p>Kalau waktunya mepet, jawaban benar tidak perlu diacak posisinya dulu. Yang penting siswa paham bahwa salah satu pilihan memakai nilai dari variabel <b>Answer</b>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Misi 4</div>
+          <div class="tag">Skor</div>
+        </div>
+        <div class="code-pill">Slide 8</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Misi 4 — Saat jawaban diklik</h2>
+            <p>Ini momen penting: siswa melihat bahwa klik pada sprite bisa memicu aturan tertentu. Kalau jawabannya benar, skor bertambah dan game lanjut ke soal berikutnya.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Jawaban benar</h3>
+            <div class="code-box">when this sprite clicked
+if &lt;(nilai pilihan) = (Answer)&gt; then
+  change [Score v] by (1)
+  broadcast [Soal Baru]
+end</div>
+          </div>
+          <div class="panel card">
+            <h3>Jawaban salah</h3>
+            <div class="code-box">when this sprite clicked
+if &lt;(nilai pilihan) ≠ (Answer)&gt; then
+  say [Coba lagi!] for (1) seconds
+end</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Interactive Quiz</div>
+        </div>
+        <div class="code-pill">Slide 9</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Cek cepat — blok mana yang menyimpan hasil hitung?</h2>
+            <p>Klik jawaban yang menurutmu paling tepat.</p>
+          </div>
+        </div>
+
+        <div class="interactive-grid" id="quiz1">
+          <button class="choice" data-correct="false">change Score by 1</button>
+          <button class="choice" data-correct="true">set Answer to (angka 1 + angka 2)</button>
+          <button class="choice" data-correct="false">broadcast Soal Baru</button>
+        </div>
+        <div class="feedback" id="quiz1-feedback">Belum dijawab.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Interactive Order</div>
+        </div>
+        <div class="code-pill">Slide 10</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Urutkan langkah game</h2>
+            <p>Klik kartu-kartu berikut sesuai urutan yang benar. Target urutan: soal muncul → hasil disimpan → pemain klik jawaban.</p>
+          </div>
+        </div>
+
+        <div class="interactive-grid" id="sortArea">
+          <button class="sort-btn" data-order="2">Set Answer</button>
+          <button class="sort-btn" data-order="3">Klik pilihan jawaban</button>
+          <button class="sort-btn" data-order="1">Tampilkan angka soal</button>
+        </div>
+        <div class="sort-zone" id="sortZone"></div>
+        <div class="sort-feedback" id="sortFeedback">Klik tiga kartu sesuai urutan yang benar.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Mini Challenge</div>
+        </div>
+        <div class="code-pill">Slide 11</div>
+      </div>
+
+      <div class="content">
+        <div class="title-wrap">
+          <div>
+            <h2>Kalau sudah selesai, coba upgrade project-mu</h2>
+            <p>Klik kotak di bawah saat tantangannya sudah dilakukan.</p>
+          </div>
+        </div>
+
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div><b>Ubah warna backdrop</b><span>Supaya game terasa lebih seru dan punya gaya sendiri.</span></div></div>
+          <div class="check-item"><div class="check-box"></div><div><b>Tambah suara</b><span>Mainkan suara saat jawaban benar.</span></div></div>
+          <div class="check-item"><div class="check-box"></div><div><b>Perbesar range angka</b><span>Ubah random dari 1–10 menjadi 1–20.</span></div></div>
+          <div class="check-item"><div class="check-box"></div><div><b>Buat versi pengurangan</b><span>Kalau sempat, ganti operator menjadi minus.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo-pill">Great job!</div>
+        </div>
+        <div class="code-pill">Slide 12</div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-panel card" style="background:rgba(255,255,255,.88)">
+          <div class="eyebrow">Closing</div>
+          <h2 style="font-size:54px;line-height:1.02;color:var(--green-deep);margin-bottom:18px">Hari ini kamu sudah belajar bahwa matematika bisa diubah menjadi game.</h2>
+          <p class="lead" style="font-size:24px">Dari soal sederhana, kita bisa membuat proyek yang punya aturan, skor, dan interaksi. Itulah inti dari coding: menyusun langkah agar komputer bisa bekerja sesuai ide kita.</p>
+          <div class="pill-list" style="margin-top:18px">
+            <span>Math</span>
+            <span>Logic</span>
+            <span>Creativity</span>
+            <span>Problem Solving</span>
+          </div>
+        </div>
+
+        <div class="visual card">
+          <div class="bubble b1"></div>
+          <div class="bubble b2"></div>
+          <div class="bubble b3"></div>
+          <div class="bubble b4"></div>
+          <div style="position:absolute;left:28px;top:28px;right:28px;padding:26px;border-radius:28px;background:rgba(255,255,255,.9);border:2px solid rgba(79,150,119,.12)">
+            <h3 style="font-size:34px;color:var(--green-deep);margin-bottom:14px">Yang bisa dipresentasikan siswa</h3>
+            <div class="pill-list">
+              <span>Angka diacak</span>
+              <span>Game menghitung jawaban</span>
+              <span>Skor bertambah</span>
+              <span>Pemain memilih jawaban</span>
+            </div>
+          </div>
+          <div class="device" style="width:330px;height:230px">
+            <div class="screen">
+              <div class="hud"><span>Score 5</span><span>Timer 11</span></div>
+              <div class="math-row">
+                <div class="math-box">8</div>
+                <div class="math-box">+</div>
+                <div class="math-box">4</div>
+                <div class="math-box">=</div>
+              </div>
+              <div class="answers">
+                <div>9</div>
+                <div>12</div>
+                <div>15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-nav">
+      <div class="small">Navigasi: <span class="kbd">←</span> <span class="kbd">→</span> atau tombol di kanan</div>
+      <div class="dots" id="dots"></div>
+      <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">← Sebelumnya</button>
+        <button class="nav-btn primary" id="nextBtn">Selanjutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const dotsWrap = document.getElementById('dots');
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i+1));
+      dot.style.border = 'none';
+      dot.style.cursor = 'pointer';
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    function goTo(index){
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      [...dotsWrap.children].forEach((dot, i) => dot.classList.toggle('active', i === current));
+    }
+    function next(){ goTo(current + 1); }
+    function prev(){ goTo(current - 1); }
+
+    document.getElementById('nextBtn').addEventListener('click', next);
+    document.getElementById('prevBtn').addEventListener('click', prev);
+
+    window.addEventListener('keydown', (e) => {
+      if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); }
+      if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+      if(e.key === 'Home'){ goTo(0); }
+      if(e.key === 'End'){ goTo(slides.length-1); }
+    });
+
+    // Quiz 1
+    const quiz1Buttons = [...document.querySelectorAll('#quiz1 .choice')];
+    const quiz1Feedback = document.getElementById('quiz1-feedback');
+    quiz1Buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isCorrect = btn.dataset.correct === 'true';
+        quiz1Buttons.forEach(b => b.classList.remove('correct','wrong'));
+        if(isCorrect){
+          btn.classList.add('correct');
+          quiz1Feedback.textContent = 'Benar! Variabel Answer dipakai untuk menyimpan hasil hitung.';
+        } else {
+          btn.classList.add('wrong');
+          quiz1Feedback.textContent = 'Belum tepat. Score mengubah nilai skor, sedangkan Answer menyimpan hasil hitung.';
+        }
+      });
+    });
+
+    // Sort interaction
+    const sortButtons = [...document.querySelectorAll('.sort-btn')];
+    const sortZone = document.getElementById('sortZone');
+    const sortFeedback = document.getElementById('sortFeedback');
+    let pickedOrders = [];
+
+    sortButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(btn.disabled) return;
+        btn.disabled = true;
+        btn.style.opacity = '.6';
+        const order = Number(btn.dataset.order);
+        pickedOrders.push(order);
+        const chip = document.createElement('div');
+        chip.className = 'sort-chip';
+        chip.textContent = btn.textContent;
+        sortZone.appendChild(chip);
+
+        if(pickedOrders.length === 3){
+          const correct = JSON.stringify(pickedOrders) === JSON.stringify([1,2,3]);
+          sortFeedback.textContent = correct
+            ? 'Urutannya benar! Soal muncul dulu, lalu Answer disimpan, baru pemain klik jawaban.'
+            : 'Urutannya belum tepat. Coba reset dan ingat: tampilkan soal → simpan Answer → klik jawaban.';
+        }
+      });
+    });
+
+    sortFeedback.addEventListener('dblclick', () => {
+      pickedOrders = [];
+      sortZone.innerHTML = '';
+      sortButtons.forEach(btn => { btn.disabled = false; btn.style.opacity = '1'; });
+      sortFeedback.textContent = 'Klik tiga kartu sesuai urutan yang benar.';
+    });
+
+    // Checklist
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.addEventListener('click', () => item.classList.toggle('done'));
+    });
+  </script>
+</body>
+</html>

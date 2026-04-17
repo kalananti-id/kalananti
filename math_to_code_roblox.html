@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Math to Code - Roblox Studio Interactive Slides</title>
+  <style>
+    :root {
+      --bg: #f5f7f6;
+      --mint: #eaf9f3;
+      --mint-2: #dff6ee;
+      --green: #417b62;
+      --green-dark: #1f5b47;
+      --green-deep: #184d3b;
+      --aqua: #a9eef2;
+      --peach: #f4cbb4;
+      --peach-2: #efb67f;
+      --yellow: #ffc94d;
+      --ink: #27483b;
+      --shadow: 0 16px 40px rgba(39, 72, 59, .14);
+      --radius: 28px;
+      --purple: #7a63d9;
+      --pink: #ff7ab7;
+      --blue: #5bb5e6;
+      --good: #dff6ee;
+      --bad: #fff1ec;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #dfe7e6;
+      font-family: Arial, "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      overflow: hidden
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(244, 203, 180, .35) 0 2%, transparent 2.2%),
+        radial-gradient(circle at 93% 9%, rgba(169, 238, 242, .95) 0 6%, rgba(169, 238, 242, .35) 6.2% 10%, transparent 10.2%),
+        radial-gradient(circle at 22% 88%, rgba(255, 201, 77, .3) 0 3%, transparent 3.1%),
+        linear-gradient(135deg, #f6f7f7 0%, #f6f7f7 42%, #edf9f4 42%, #edf9f4 100%);
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 34px 44px 88px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 20px;
+      opacity: 0;
+      transform: translateX(60px) scale(.98);
+      pointer-events: none;
+      transition: all .45s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: auto
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .logo-pill,
+    .code-pill,
+    .tag {
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+      background: white;
+      border: 2px solid rgba(79, 150, 119, .18);
+    }
+
+    .logo-pill {
+      color: var(--green-dark);
+      background: rgba(255, 255, 255, .92)
+    }
+
+    .code-pill {
+      background: var(--mint);
+      color: var(--green-deep)
+    }
+
+    .tag {
+      background: var(--aqua);
+      color: var(--green-deep);
+      border-color: rgba(31, 91, 71, .12);
+      font-size: 14px
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .9);
+      border: 2px solid rgba(79, 150, 119, .15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 28px;
+      align-items: center;
+      height: 100%
+    }
+
+    .hero-panel {
+      padding: 28px 34px
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--peach);
+      font-weight: 800;
+      margin-bottom: 16px
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0
+    }
+
+    h1 {
+      font-size: 68px;
+      line-height: .95;
+      letter-spacing: -2px;
+      color: #fff;
+      text-shadow: 0 4px 0 var(--green-dark), 0 9px 0 var(--green-deep), 0 0 0 transparent;
+      -webkit-text-stroke: 10px rgba(79, 150, 119, .18);
+      paint-order: stroke fill;
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 16px
+    }
+
+    .lead {
+      font-size: 22px;
+      line-height: 1.45;
+      max-width: 760px
+    }
+
+    .big-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 24px
+    }
+
+    .stat {
+      padding: 18px 18px 16px;
+      background: var(--mint);
+      border-radius: 24px;
+      border: 2px solid rgba(79, 150, 119, .12)
+    }
+
+    .stat b {
+      display: block;
+      font-size: 28px;
+      color: var(--green-deep);
+      margin-bottom: 6px
+    }
+
+    .stat span {
+      font-size: 16px;
+      line-height: 1.35
+    }
+
+    .visual {
+      position: relative;
+      min-height: 520px;
+      padding: 26px;
+      background: linear-gradient(160deg, rgba(234, 249, 243, .85), rgba(255, 255, 255, .92));
+      overflow: hidden
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%
+    }
+
+    .b1 {
+      width: 170px;
+      height: 170px;
+      background: rgba(169, 238, 242, .9);
+      right: -18px;
+      top: -16px
+    }
+
+    .b2 {
+      width: 52px;
+      height: 52px;
+      background: rgba(244, 203, 180, .85);
+      left: 30px;
+      top: 100px
+    }
+
+    .b3 {
+      width: 26px;
+      height: 26px;
+      background: rgba(255, 201, 77, .75);
+      right: 120px;
+      top: 164px
+    }
+
+    .b4 {
+      width: 92px;
+      height: 92px;
+      background: rgba(79, 150, 119, .18);
+      right: 30px;
+      bottom: 34px
+    }
+
+    .obby-stage {
+      position: absolute;
+      right: 28px;
+      bottom: 28px;
+      width: 360px;
+      height: 250px;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 3px solid rgba(79, 150, 119, .18);
+      box-shadow: var(--shadow);
+      background: linear-gradient(160deg, #7a21ba, #45156f)
+    }
+
+    .ceiling {
+      position: absolute;
+      left: 76px;
+      top: 0;
+      width: 210px;
+      height: 86px;
+      background: #8ecae6;
+      clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%)
+    }
+
+    .floor {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      bottom: 0;
+      height: 130px;
+      background: linear-gradient(90deg, #ff3a4b, #781f2f);
+      clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%)
+    }
+
+    .left-wall,
+    .right-wall {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 110px
+    }
+
+    .left-wall {
+      left: 0;
+      background: linear-gradient(180deg, #9a26d8, #5f138c)
+    }
+
+    .right-wall {
+      right: 0;
+      background: linear-gradient(180deg, #4f177f, #39105e)
+    }
+
+    .gate {
+      position: absolute;
+      left: 102px;
+      top: 78px;
+      width: 156px;
+      height: 96px;
+      background: linear-gradient(180deg, #c9d8ed 0 34%, #8ab4d2 34% 100%);
+      transform: perspective(500px) rotateX(8deg)
+    }
+
+    .gate:before {
+      content: "Berapakah 4 + 4?";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 12px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #183d35
+    }
+
+    .gate .ans-left,
+    .gate .ans-right {
+      position: absolute;
+      bottom: 22px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #183d35
+    }
+
+    .gate .ans-left {
+      left: 26px
+    }
+
+    .gate .ans-right {
+      right: 26px
+    }
+
+    .platform-green,
+    .platform-yellow,
+    .platform-blue {
+      position: absolute;
+      bottom: 0;
+      height: 56px
+    }
+
+    .platform-green {
+      left: 230px;
+      width: 130px;
+      background: #6d9d12
+    }
+
+    .platform-yellow {
+      left: 0;
+      width: 110px;
+      background: #f3ea22
+    }
+
+    .platform-blue {
+      left: 110px;
+      width: 120px;
+      background: #3659a8
+    }
+
+    .player {
+      position: absolute;
+      left: 145px;
+      bottom: 42px;
+      width: 50px;
+      height: 72px
+    }
+
+    .player .head {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #d73e4e;
+      margin: 0 auto;
+      box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .15)
+    }
+
+    .player .body {
+      width: 36px;
+      height: 30px;
+      border-radius: 14px 14px 10px 10px;
+      background: #ececec;
+      margin: 0 auto;
+      margin-top: -2px;
+      border: 2px solid #b2c0cf
+    }
+
+    .mini-tags {
+      position: absolute;
+      left: 30px;
+      top: 30px;
+      display: grid;
+      gap: 12px;
+      width: 260px
+    }
+
+    .mini-tags .box {
+      padding: 16px 18px;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--green-deep)
+    }
+
+    .mini-tags .box.small {
+      font-size: 18px;
+      background: var(--mint)
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+      height: 100%
+    }
+
+    .title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px
+    }
+
+    .title-wrap h2 {
+      font-size: 46px;
+      color: var(--green-deep);
+      letter-spacing: -1px
+    }
+
+    .title-wrap p {
+      font-size: 20px;
+      max-width: 690px;
+      line-height: 1.45
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .panel {
+      padding: 24px
+    }
+
+    .panel h3 {
+      font-size: 26px;
+      color: var(--green-deep);
+      margin-bottom: 14px
+    }
+
+    .panel p {
+      font-size: 19px;
+      line-height: 1.5
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .pill-list span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--mint);
+      font-weight: 800;
+      border: 2px solid rgba(79, 150, 119, .14)
+    }
+
+    .step-card {
+      padding: 22px;
+      border-radius: 26px;
+      background: #fff;
+      border: 2px solid rgba(79, 150, 119, .14);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden
+    }
+
+    .step-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -10px -10px auto;
+      width: 82px;
+      height: 82px;
+      border-radius: 24px;
+      background: rgba(169, 238, 242, .35);
+      transform: rotate(16deg)
+    }
+
+    .step-no {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: var(--green);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 14px
+    }
+
+    .step-card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: var(--green-deep)
+    }
+
+    .step-card p {
+      font-size: 18px;
+      line-height: 1.45
+    }
+
+    .code-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: #f7fbf9;
+      border-radius: 18px;
+      border: 2px dashed rgba(79, 150, 119, .18);
+      font-family: "Courier New", monospace;
+      font-size: 16px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word
+    }
+
+    .tree-box {
+      margin-top: 10px;
+      padding: 16px;
+      background: #f7fbf9;
+      border-radius: 18px;
+      border: 2px dashed rgba(79, 150, 119, .18);
+      font-family: "Courier New", monospace;
+      font-size: 17px;
+      line-height: 1.45;
+      white-space: pre-wrap
+    }
+
+    .code-title {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--aqua);
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: var(--green-deep)
+    }
+
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 8px
+    }
+
+    .choice,
+    .sort-btn {
+      padding: 20px;
+      border-radius: 24px;
+      background: #fff;
+      border: 3px solid rgba(79, 150, 119, .16);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      font-size: 20px;
+      font-weight: 800;
+      text-align: left;
+      color: var(--green-deep)
+    }
+
+    .choice:hover,
+    .sort-btn:hover {
+      transform: translateY(-4px);
+      border-color: rgba(79, 150, 119, .5)
+    }
+
+    .choice.correct {
+      background: var(--mint);
+      border-color: var(--green)
+    }
+
+    .choice.wrong {
+      background: #fff3ef;
+      border-color: #ea8e65
+    }
+
+    .feedback,
+    .sort-feedback {
+      min-height: 54px;
+      margin-top: 14px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 20px;
+      font-weight: 800;
+      background: #fff;
+      border: 2px dashed rgba(79, 150, 119, .18)
+    }
+
+    .sort-zone {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 20px;
+      background: var(--mint)
+    }
+
+    .sort-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2px solid rgba(79, 150, 119, .16);
+      font-weight: 800
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 8px
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 18px;
+      background: #fff;
+      border-radius: 22px;
+      border: 2px solid rgba(79, 150, 119, .12);
+      box-shadow: var(--shadow);
+      cursor: pointer
+    }
+
+    .check-box {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      border: 3px solid var(--green);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+      flex: 0 0 30px
+    }
+
+    .check-item.done .check-box {
+      background: var(--green)
+    }
+
+    .check-item b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 20px;
+      color: var(--green-deep)
+    }
+
+    .check-item span {
+      font-size: 17px;
+      line-height: 1.4
+    }
+
+    .footer-nav {
+      position: absolute;
+      left: 34px;
+      right: 34px;
+      bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      z-index: 5
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(79, 150, 119, .24);
+      transition: all .2s ease
+    }
+
+    .dot.active {
+      width: 36px;
+      background: var(--green)
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 12px
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #fff;
+      color: var(--green-deep);
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(79, 150, 119, .14)
+    }
+
+    .nav-btn.primary {
+      background: var(--green);
+      color: #fff
+    }
+
+    .kbd {
+      padding: 5px 9px;
+      border-radius: 10px;
+      background: #fff;
+      border: 2px solid rgba(79, 150, 119, .14);
+      font-weight: 900
+    }
+
+    .small {
+      font-size: 16px;
+      opacity: .9
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      height: 100%
+    }
+
+    .mini-stage {
+      padding: 22px;
+      background: linear-gradient(180deg, #dff6ee, #bfe7d8);
+      min-height: 300px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .wall-l,
+    .wall-r {
+      position: absolute;
+      bottom: 26px;
+      width: 120px;
+      height: 170px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 4px solid #dbe6ec;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      font-weight: 900;
+      box-shadow: var(--shadow)
+    }
+
+    .wall-l {
+      left: 28px
+    }
+
+    .wall-r {
+      right: 28px
+    }
+
+    .question-board {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 18px;
+      width: 72%;
+      padding: 20px;
+      background: #fff;
+      border-radius: 20px;
+      border: 2px solid rgba(79, 150, 119, .14);
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      font-size: 28px;
+      text-align: center;
+      color: var(--green-deep)
+    }
+
+    .path {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 20px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffd84f, #91c11b, #4f9677)
+    }
+
+    .avatar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 44px;
+      width: 56px;
+      height: 88px
+    }
+
+    .avatar .head {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #dd5161;
+      margin: 0 auto
+    }
+
+    .avatar .body {
+      width: 40px;
+      height: 36px;
+      background: #e9eef4;
+      border-radius: 16px 16px 10px 10px;
+      margin: 0 auto;
+      margin-top: -2px
+    }
+
+    .quote {
+      padding: 22px 24px;
+      background: var(--peach);
+      border-radius: 28px;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.35;
+      color: var(--green-deep)
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px
+    }
+
+    .compare .col {
+      padding: 18px;
+      border-radius: 22px;
+      background: #fff;
+      border: 2px solid rgba(79, 150, 119, .12)
+    }
+
+    .compare .col.good {
+      background: var(--good)
+    }
+
+    .compare .col.bad {
+      background: var(--bad)
+    }
+
+    .compare h4 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: var(--green-deep)
+    }
+
+    .compare ul {
+      margin: 0;
+      padding-left: 22px;
+      font-size: 18px;
+      line-height: 1.5
+    }
+
+    @media (max-width: 1100px) {
+
+      .hero,
+      .showcase,
+      .grid-2,
+      .grid-3,
+      .interactive-grid,
+      .checklist,
+      .compare {
+        grid-template-columns: 1fr
+      }
+
+      h1 {
+        font-size: 58px
+      }
+
+      .slide {
+        padding: 24px 24px 94px
+      }
+
+      .title-wrap h2 {
+        font-size: 36px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="deck">
+
+    <section class="slide active">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo-pill">ruangguru CODING</div>
+          <div class="logo-pill">Kalananti by Ruangguru</div>
+          <div class="logo-pill">STEM</div>
+        </div>
+        <div class="code-pill">Kode Akses: MTC-RBX-25</div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-panel">
+          <div class="eyebrow">Interactive Slides • Trial Class 60 Menit</div>
+          <h1>Math to Code</h1>
+          <div class="hero-sub">Roblox Studio Edition</div>
+          <p class="lead">Belajar matematika sambil membuat obby quiz. Pemain melihat soal di tembok, lalu memilih jalur
+            kanan atau kiri. Kalau jawabannya benar, tembok bisa ditembus. Kalau salah, pemain mati dan kembali dari
+            awal.</p>
+          <div class="big-stat-grid">
+            <div class="stat"><b>Target</b><span>Siswa pemula yang baru kenal coding Roblox Studio</span></div>
+            <div class="stat"><b>Output</b><span>Obby quiz kiri-kanan dengan soal matematika</span></div>
+            <div class="stat"><b>Fokus</b><span>Part, SurfaceGui, TextLabel, dan script sederhana</span></div>
+            <div class="stat"><b>Gaya Belajar</b><span>Step by step, visual, dan langsung praktik</span></div>
+          </div>
+        </div>
+
+        <div class="visual card">
+          <div class="bubble b1"></div>
+          <div class="bubble b2"></div>
+          <div class="bubble b3"></div>
+          <div class="bubble b4"></div>
+          <div class="mini-tags">
+            <div class="box">Hari ini kita bikin:</div>
+            <div class="box small">Soal di tembok</div>
+            <div class="box small">Jawaban kiri & kanan</div>
+            <div class="box small">Benar tembus • Salah mati</div>
+          </div>
+          <div class="obby-stage">
+            <div class="left-wall"></div>
+            <div class="right-wall"></div>
+            <div class="ceiling"></div>
+            <div class="floor"></div>
+            <div class="gate">
+              <div class="ans-left">7</div>
+              <div class="ans-right">8</div>
+            </div>
+            <div class="platform-yellow"></div>
+            <div class="platform-blue"></div>
+            <div class="platform-green"></div>
+            <div class="player">
+              <div class="head"></div>
+              <div class="body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Tujuan Belajar</div>
+          <div class="tag">Konsep Obby Quiz</div>
+        </div>
+        <div class="code-pill">Slide 2</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Apa yang siswa pelajari?</h2>
+          <p>Di trial class ini, siswa tidak perlu membuat semua map dari nol. Mereka fokus melengkapi bagian-bagian
+            penting supaya obby quiz bisa berjalan.</p>
+        </div>
+        <div class="grid-3">
+          <div class="panel card">
+            <h3>1. Menata object</h3>
+            <p>Siswa mengenal <b>Part</b>, memberi nama object, dan menyusun jalur quiz sederhana di Roblox Studio.</p>
+            <div class="pill-list"><span>Part</span><span>Model</span><span>SpawnLocation</span></div>
+          </div>
+          <div class="panel card">
+            <h3>2. Menampilkan soal</h3>
+            <p>Siswa memakai <b>SurfaceGui</b> dan <b>TextLabel</b> agar tembok bisa menampilkan soal dan jawaban.</p>
+            <div class="pill-list"><span>SurfaceGui</span><span>TextLabel</span><span>Text</span></div>
+          </div>
+          <div class="panel card">
+            <h3>3. Membuat aturan game</h3>
+            <p>Siswa membuat tembok benar bisa ditembus dan tembok salah membuat karakter mati lalu mengulang dari awal.
+            </p>
+            <div class="pill-list"><span>CanCollide</span><span>Touched</span><span>Humanoid</span></div>
+          </div>
+        </div>
+        <div class="quote">Target akhirnya: pemain membaca soal, memilih kanan atau kiri, lalu melihat hasil dari
+          pilihannya secara langsung.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Starter Project</div>
+          <div class="tag">Struktur Explorer</div>
+        </div>
+        <div class="code-pill">Slide 3</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Struktur paling sederhana</h2>
+          <p>Supaya mudah untuk pemula, cukup pakai tiga part utama: satu part untuk soal, satu untuk jawaban benar, dan
+            satu untuk jawaban salah.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Yang disiapkan guru</h3>
+            <div class="tree-box">Workspace
+              ├─ SpawnLocation
+              ├─ Quiz1 (Model)
+              │ ├─ Soal (Part)
+              │ │ └─ SurfaceGui
+              │ │ └─ TextLabel
+              │ ├─ Benar (Part)
+              │ │ └─ SurfaceGui
+              │ │ └─ TextLabel
+              │ ├─ Salah (Part)
+              │ │ └─ SurfaceGui
+              │ │ └─ TextLabel
+              │ └─ Script (opsional utama)
+            </div>
+          </div>
+          <div class="panel card">
+            <h3>Fungsi tiap object</h3>
+            <div class="pill-list">
+              <span><b>Soal</b> = papan pertanyaan</span>
+              <span><b>Benar</b> = tembok jawaban benar</span>
+              <span><b>Salah</b> = tembok jawaban salah</span>
+              <span><b>SpawnLocation</b> = tempat muncul lagi</span>
+            </div>
+            <div class="compare">
+              <div class="col good">
+                <h4>Bagus untuk trial</h4>
+                <ul>
+                  <li>Nama object jelas</li>
+                  <li>Mudah dicari di Explorer</li>
+                  <li>Mudah ganti soal</li>
+                </ul>
+              </div>
+              <div class="col bad">
+                <h4>Hindari dulu</h4>
+                <ul>
+                  <li>Terlalu banyak part acak</li>
+                  <li>Nama object campur-campur</li>
+                  <li>Script terlalu banyak di awal</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Langkah 1</div>
+          <div class="tag">Papan Soal</div>
+        </div>
+        <div class="code-pill">Slide 4</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Membuat tembok soal</h2>
+          <p>Pada part <b>Soal</b>, tambahkan <b>SurfaceGui</b> lalu isi <b>TextLabel</b>. Ini yang akan menampilkan
+            pertanyaan matematika.</p>
+        </div>
+        <div class="grid-2">
+          <div class="step-card">
+            <div class="step-no">1</div>
+            <h3>Siapkan part soal</h3>
+            <p>Buat part besar di depan jalur. Ubah namanya menjadi <b>Soal</b>. Pastikan <b>Anchored = true</b> supaya
+              tidak jatuh.</p>
+            <div class="pill-list"><span>Part</span><span>Anchored</span><span>Name = Soal</span></div>
+          </div>
+          <div class="step-card">
+            <div class="step-no">2</div>
+            <h3>Tambahkan tulisan</h3>
+            <p>Klik kanan part <b>Soal</b> → Insert Object → <b>SurfaceGui</b> → tambahkan <b>TextLabel</b>.</p>
+            <div class="code-box">Atur TextLabel:
+              TextScaled = true
+              BackgroundTransparency = 1
+              TextColor3 = warna gelap
+              Font = sesuai kebutuhan</div>
+          </div>
+        </div>
+        <div class="panel card">
+          <h3>Script contoh untuk papan soal</h3>
+          <div class="code-title">Script di dalam TextLabel pada Soal</div>
+          <div class="code-box">local TextSign = script.Parent
+            local Part = script.Parent.Parent.Parent
+
+            TextSign.Text = "Rata-rata dari 6 dan 10 adalah..."</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Langkah 2</div>
+          <div class="tag">Jawaban Benar</div>
+        </div>
+        <div class="code-pill">Slide 5</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Membuat tembok jawaban benar</h2>
+          <p>Pada tembok jawaban benar, teks harus benar dan part harus bisa ditembus supaya pemain bisa lewat.</p>
+        </div>
+        <div class="showcase">
+          <div class="panel card mini-stage">
+            <div class="question-board">Rata-rata dari 6 dan 10 adalah...</div>
+            <div class="wall-l">7</div>
+            <div class="wall-r">8</div>
+            <div class="path"></div>
+            <div class="avatar">
+              <div class="head"></div>
+              <div class="body"></div>
+            </div>
+          </div>
+          <div class="panel card">
+            <h3>Yang harus diubah</h3>
+            <div class="pill-list"><span>Name = Benar</span><span>Jawaban = 8</span><span>CanCollide = false</span>
+            </div>
+            <div class="code-title">Script di dalam TextLabel pada Benar</div>
+            <div class="code-box">local TextSign = script.Parent
+              local Part = script.Parent.Parent.Parent
+
+              TextSign.Text = "8"
+              Part.CanCollide = false</div>
+            <p style="margin-top:12px;font-size:18px;line-height:1.45">Karena <b>CanCollide = false</b>, karakter bisa
+              menembus tembok ini. Ini menandakan pemain memilih jawaban yang benar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Langkah 3</div>
+          <div class="tag">Jawaban Salah</div>
+        </div>
+        <div class="code-pill">Slide 6</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Membuat tembok jawaban salah</h2>
+          <p>Pada tembok jawaban salah, part tetap padat dan diberi script sentuh. Saat pemain menyentuhnya, karakter
+            langsung mati lalu respawn.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Script teks jawaban salah</h3>
+            <div class="code-title">Script di dalam TextLabel pada Salah</div>
+            <div class="code-box">local TextSign = script.Parent
+              local Part = script.Parent.Parent.Parent
+
+              TextSign.Text = "7"</div>
+            <p style="margin-top:12px;font-size:18px;line-height:1.45">Untuk jawaban salah, tidak perlu mengubah
+              <b>CanCollide</b>. Biarkan part tetap padat.</p>
+          </div>
+          <div class="panel card">
+            <h3>Script mematikan pemain</h3>
+            <div class="code-title">Script di dalam part Salah</div>
+            <div class="code-box">local DamagePart = script.Parent
+
+              local function Touch(otherPart)
+              local character = otherPart.Parent
+              local humanoid = character and character:FindFirstChild("Humanoid")
+
+              if humanoid then
+              humanoid.Health = 0
+              end
+              end
+
+              DamagePart.Touched:Connect(Touch)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Urutan Kerja</div>
+          <div class="tag">Step by Step</div>
+        </div>
+        <div class="code-pill">Slide 7</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Urutan membuat obby quiz</h2>
+          <p>Ikuti urutan ini supaya hasilnya rapi dan tidak bingung saat mengetik script.</p>
+        </div>
+        <div class="grid-3">
+          <div class="step-card">
+            <div class="step-no">1</div>
+            <h3>Buat jalur dan SpawnLocation</h3>
+            <p>Siapkan tempat mulai, jalur lurus, dan ruang untuk memasang dua tembok jawaban.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">2</div>
+            <h3>Buat part Soal, Benar, Salah</h3>
+            <p>Ubah nama object dengan jelas supaya script mudah dipasang dan dicari.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">3</div>
+            <h3>Tambahkan SurfaceGui + TextLabel</h3>
+            <p>Pada ketiga part, buat tulisan yang menghadap ke arah pemain.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">4</div>
+            <h3>Isi teks pertanyaan</h3>
+            <p>Ketikan soal pada part Soal dan isi pilihan jawaban pada part Benar dan Salah.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">5</div>
+            <h3>Buat Benar bisa ditembus</h3>
+            <p>Pada script Benar, atur <b>Part.CanCollide = false</b>.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-no">6</div>
+            <h3>Buat Salah mematikan</h3>
+            <p>Pada part Salah, pasang script Touched agar pemain mati saat memilih jawaban salah.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Aktivitas</div>
+          <div class="tag">Interactive Check</div>
+        </div>
+        <div class="code-pill">Slide 8</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Klik jawaban yang benar</h2>
+          <p>Part mana yang harus diberi <b>CanCollide = false</b> supaya pemain bisa menembus jalur yang benar?</p>
+        </div>
+        <div class="interactive-grid" id="quiz1">
+          <button class="choice" data-correct="false">Part Soal</button>
+          <button class="choice" data-correct="true">Part Benar</button>
+          <button class="choice" data-correct="false">Part Salah</button>
+        </div>
+        <div class="feedback" id="feedback1">Klik salah satu pilihan.</div>
+        <div class="panel card">
+          <h3>Ingat logikanya</h3>
+          <p><b>Benar</b> harus bisa ditembus, jadi part-nya tidak bertabrakan. <b>Salah</b> tetap padat dan diberi
+            script agar pemain mati saat menyentuhnya.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Aktivitas</div>
+          <div class="tag">Urutkan Langkah</div>
+        </div>
+        <div class="code-pill">Slide 9</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Urutkan langkah pembuatan game</h2>
+          <p>Klik tombol di bawah sesuai urutan yang paling masuk akal. Reset dengan double click pada kotak feedback.
+          </p>
+        </div>
+        <div class="interactive-grid" id="sortButtons">
+          <button class="sort-btn" data-value="3">Pasang script sentuh pada part Salah</button>
+          <button class="sort-btn" data-value="1">Buat part Soal, Benar, dan Salah</button>
+          <button class="sort-btn" data-value="2">Tambahkan SurfaceGui dan TextLabel</button>
+          <button class="sort-btn" data-value="4">Uji game dengan Play</button>
+        </div>
+        <div class="sort-zone" id="sortZone"></div>
+        <div class="sort-feedback" id="sortFeedback">Urutan pilihanmu akan muncul di sini.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Checklist</div>
+          <div class="tag">Sebelum Test</div>
+        </div>
+        <div class="code-pill">Slide 10</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Cek proyekmu sebelum mencoba</h2>
+          <p>Klik setiap kotak saat sudah selesai dicek.</p>
+        </div>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>Nama part sudah benar</b><span>Ada <b>Soal</b>, <b>Benar</b>, dan <b>Salah</b>.</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>Teks sudah muncul</b><span>SurfaceGui dan TextLabel tampil menghadap pemain.</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>Jawaban benar bisa ditembus</b><span>Script pada part Benar memakai <b>Part.CanCollide =
+                  false</b>.</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>Jawaban salah membuat mati</b><span>Part Salah sudah punya script <b>Touched</b>.</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>SpawnLocation ada</b><span>Setelah mati, pemain bisa muncul kembali dari awal.</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <div><b>Semua part anchored</b><span>Part tidak jatuh atau bergerak saat game dijalankan.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Bonus</div>
+          <div class="tag">Pengembangan</div>
+        </div>
+        <div class="code-pill">Slide 11</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Kalau sudah selesai, bisa tambah apa?</h2>
+          <p>Setelah versi dasar jadi, siswa bisa mengembangkan gamenya sedikit demi sedikit.</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>Ide pengembangan mudah</h3>
+            <div class="pill-list">
+              <span>Tambah soal kedua</span>
+              <span>Buat checkpoint setelah benar</span>
+              <span>Tambah dekorasi map</span>
+              <span>Ganti warna jalur</span>
+              <span>Tambah papan Finish</span>
+            </div>
+          </div>
+          <div class="panel card">
+            <h3>Ide pengembangan menengah</h3>
+            <div class="pill-list">
+              <span>Acak posisi kanan-kiri</span>
+              <span>Buat banyak gate berurutan</span>
+              <span>Tambahkan sound</span>
+              <span>Tambah efek benar / salah</span>
+              <span>Pakai soal operasi lain</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote">Programmer tidak harus langsung membuat game besar. Mulai dari satu gate yang bekerja, lalu
+          tambah satu per satu.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo-pill">ruangguru CODING</div>
+          <div class="logo-pill">Kalananti by Ruangguru</div>
+        </div>
+        <div class="code-pill">Slide 12</div>
+      </div>
+      <div class="hero">
+        <div class="hero-panel">
+          <div class="eyebrow">Closing</div>
+          <h1 style="font-size:58px">Obby Quiz</h1>
+          <div class="hero-sub">Siap dicoba di Roblox Studio</div>
+          <p class="lead">Sekarang siswa sudah tahu cara membuat papan soal, memilih jawaban lewat jalur kanan-kiri, dan
+            memberi aturan benar atau salah dengan script sederhana.</p>
+          <div class="big-stat-grid">
+            <div class="stat"><b>Sudah Bisa</b><span>Menampilkan soal pada tembok</span></div>
+            <div class="stat"><b>Sudah Bisa</b><span>Membuat jawaban benar bisa ditembus</span></div>
+            <div class="stat"><b>Sudah Bisa</b><span>Membuat jawaban salah mematikan pemain</span></div>
+            <div class="stat"><b>Next Step</b><span>Tambah lebih banyak gate dan tantangan</span></div>
+          </div>
+        </div>
+        <div class="visual card">
+          <div class="bubble b1"></div>
+          <div class="bubble b2"></div>
+          <div class="bubble b3"></div>
+          <div class="bubble b4"></div>
+          <div class="question-board" style="top:44px;width:76%">Berapakah keliling persegi dengan sisi 6 cm?</div>
+          <div class="wall-l" style="bottom:120px">12</div>
+          <div class="wall-r" style="bottom:120px">24</div>
+          <div class="path" style="bottom:80px"></div>
+          <div class="avatar" style="bottom:98px">
+            <div class="head"></div>
+            <div class="body"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-nav">
+      <div class="dots" id="dots"></div>
+      <div class="small">Navigasi: <span class="kbd">←</span> <span class="kbd">→</span></div>
+      <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">← Sebelumnya</button>
+        <button class="nav-btn primary" id="nextBtn">Berikutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Ke slide ' + (i + 1));
+      d.style.border = 'none';
+      d.style.cursor = 'pointer';
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    });
+
+    function updateSlides() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      [...dotsWrap.children].forEach((d, i) => d.classList.toggle('active', i === current));
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+      prevBtn.style.opacity = current === 0 ? .5 : 1;
+      nextBtn.style.opacity = current === slides.length - 1 ? .5 : 1;
+    }
+    function goTo(i) { current = Math.max(0, Math.min(slides.length - 1, i)); updateSlides(); }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') next();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
+    });
+
+    // quiz 1
+    const feedback1 = document.getElementById('feedback1');
+    document.querySelectorAll('#quiz1 .choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#quiz1 .choice').forEach(x => x.classList.remove('correct', 'wrong'));
+        if (btn.dataset.correct === 'true') {
+          btn.classList.add('correct');
+          feedback1.textContent = 'Betul! Part Benar yang harus dibuat bisa ditembus dengan CanCollide = false.';
+        } else {
+          btn.classList.add('wrong');
+          feedback1.textContent = 'Belum tepat. Coba ingat: pemain harus bisa lewat di jalur jawaban yang benar.';
+        }
+      });
+    });
+
+    // sort activity
+    const sortZone = document.getElementById('sortZone');
+    const sortFeedback = document.getElementById('sortFeedback');
+    let picks = [];
+    function renderSort() {
+      sortZone.innerHTML = '';
+      picks.forEach(v => {
+        const chip = document.createElement('div');
+        chip.className = 'sort-chip';
+        chip.textContent = v.label;
+        sortZone.appendChild(chip);
+      });
+      if (picks.length === 0) {
+        sortFeedback.textContent = 'Urutan pilihanmu akan muncul di sini.';
+      } else if (picks.length < 4) {
+        sortFeedback.textContent = 'Lanjutkan sampai semua langkah dipilih.';
+      } else {
+        const answer = picks.map(x => x.value).join(',');
+        if (answer === '1,2,3,4') {
+          sortFeedback.textContent = 'Urutannya pas! Buat part dulu, tambah tulisan, pasang script, lalu uji game.';
+        } else {
+          sortFeedback.textContent = 'Masih belum urut. Double click kotak ini untuk reset lalu coba lagi.';
+        }
+      }
+    }
+    document.querySelectorAll('#sortButtons .sort-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.value;
+        if (picks.find(x => x.value === value)) return;
+        picks.push({ value: value, label: btn.textContent });
+        renderSort();
+      });
+    });
+    sortFeedback.addEventListener('dblclick', () => { picks = []; renderSort(); });
+
+    // checklist
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.addEventListener('click', () => item.classList.toggle('done'));
+    });
+
+    updateSlides();
+  </script>
+</body>
+
+</html>
