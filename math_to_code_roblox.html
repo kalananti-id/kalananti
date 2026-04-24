@@ -951,26 +951,29 @@
     }
 
     .promo-container {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-  margin-top: 20px;
-}
-.promo-image {
-  flex: 1;
-  text-align: center;
-}
-.promo-details {
-  flex: 1.2;
-}
-.next-step-badge {
-  margin-top: 20px;
-  padding: 15px;
-  background: var(--yellow);
-  border-radius: 15px;
-  font-weight: bold;
-  text-align: center;
-}
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .promo-image {
+      flex: 1;
+      text-align: center;
+    }
+
+    .promo-details {
+      flex: 1.2;
+    }
+
+    .next-step-badge {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--yellow);
+      border-radius: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
 
     @media (max-width: 1100px) {
 
@@ -995,6 +998,108 @@
       .title-wrap h2 {
         font-size: 36px
       }
+
+      /* --- CSS KHUSUS SLIDE PROMO (ROBLOX) --- */
+    .promo-container {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr; /* Gambar sedikit lebih kecil dari teks */
+      gap: 36px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .promo-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .promo-image img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .promo-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .promo-details h2 {
+      font-size: 42px;
+      color: var(--green-deep);
+      line-height: 1.1;
+      margin-bottom: 4px;
+      letter-spacing: -1px;
+    }
+
+    .promo-details > p {
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .benefits-box {
+      background: #fff;
+      border: 3px solid rgba(79,150,119,.16);
+      border-radius: 20px;
+      padding: 22px 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .benefits-box h4 {
+      font-size: 22px;
+      color: var(--green-deep);
+      margin: 0 0 14px 0;
+    }
+
+    .benefits-box ul {
+      list-style: none; /* Menghilangkan bullet bawaan karena kamu pakai emoji */
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .benefits-box li {
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .next-step-badge {
+      background: var(--yellow);
+      border-bottom: 4px solid #eab02a;
+      padding: 16px 20px;
+      border-radius: 16px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--green-deep);
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      animation: popIn .4s cubic-bezier(.17,.89,.32,1.5); /* Menggunakan animasi bawaanmu */
+    }
+
+    .next-step-badge p {
+      margin: 0;
+    }
+
+    /* Responsivitas agar aman di layar kecil */
+    @media (max-width: 1100px) {
+      .promo-container {
+        grid-template-columns: 1fr; /* Berubah jadi atas-bawah di layar kecil */
+        gap: 20px;
+      }
+      .promo-image img {
+        max-height: 280px !important; 
+      }
+      .promo-details h2 {
+        font-size: 34px;
+      }
+    }
     }
   </style>
 </head>
@@ -1134,6 +1239,44 @@
         <div class="quote">Targetnya: Bikin kuis matematika yang bikin pemain mikir keras sekaligus deg-degan!</div>
       </div>
     </section>
+
+    <section class="slide">
+  <div class="topbar">
+    <div class="brand">
+      <div class="tag">Final Step</div>
+      <div class="tag">Become a Developer</div>
+    </div>
+    <div class="code-pill">Join Us!</div>
+  </div>
+  <div class="content">
+    <div class="promo-container">
+      <div class="promo-image">
+        <img
+          src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/23eba63a-a6e8-47f6-bf5e-d36c2be315c2.jpeg"
+          alt="Roblox Promo Poster"
+          style="border-radius: 20px; box-shadow: var(--shadow); max-height: 480px;">
+      </div>
+
+      <div class="promo-details">
+        <h2>Bikin Game Roblox Kamu Sendiri! 🎮🔥</h2>
+        <p>Lihat ini! Kamu juga bisa bikin game seperti di Roblox loh 😆</p>
+
+        <div class="benefits-box">
+          <h4>Di program ini kamu akan...</h4>
+          <ul>
+            <li>🎮 Membuat game Roblox sendiri</li>
+            <li>🌍 Mendesain dunia & map seru</li>
+            <li>🧩 Mengatur aturan dan tantangan game</li>
+          </ul>
+        </div>
+
+        <div class="next-step-badge">
+          <p>Tanya Student Advisor untuk informasi detail dan cara pendaftarannya ya!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="slide">
       <div class="topbar">
@@ -1532,84 +1675,88 @@
       </div>
     </section>
 
-   <section class="slide">
-  <div class="topbar">
-    <div class="brand">
-      <div class="tag">The Next Level</div>
-      <div class="tag">Upgrade Your Obby</div>
-    </div>
-    <div class="code-pill">Slide 11</div>
-  </div>
-  <div class="content">
-    <div class="title-wrap">
-      <h2>Obby Kamu Bisa Jauh Lebih Keren! 🚀</h2>
-      <p>Hari ini kamu sudah berhasil bikin 1 gerbang. Bayangkan kalau Obby kuis kamu punya 50 level dengan fitur-fitur pro ini!</p>
-    </div>
-    <div class="grid-2">
-      <div class="panel card">
-        <h3>🔥 Upgrade Gameplay</h3>
-        <p>Bikin kuis kamu jadi lebih menantang dan interaktif:</p>
-        <div class="pill-list">
-          <span>🌀 <b>Moving Gates:</b> Tembok jawaban yang bergerak & berputar.</span>
-          <span>⏲️ <b>Time Attack:</b> Pemain harus jawab sebelum waktu habis!</span>
-          <span>🌈 <b>Effect Shop:</b> Pakai koin hasil kuis untuk beli efek karakter.</span>
-          <span>⚡ <b>Power Ups:</b> Jawaban benar kasih kecepatan (Speed) tambahan.</span>
+    <section class="slide">
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">The Next Level</div>
+          <div class="tag">Upgrade Your Obby</div>
+        </div>
+        <div class="code-pill">Slide 11</div>
+      </div>
+      <div class="content">
+        <div class="title-wrap">
+          <h2>Obby Kamu Bisa Jauh Lebih Keren! 🚀</h2>
+          <p>Hari ini kamu sudah berhasil bikin 1 gerbang. Bayangkan kalau Obby kuis kamu punya 50 level dengan
+            fitur-fitur pro ini!</p>
+        </div>
+        <div class="grid-2">
+          <div class="panel card">
+            <h3>🔥 Upgrade Gameplay</h3>
+            <p>Bikin kuis kamu jadi lebih menantang dan interaktif:</p>
+            <div class="pill-list">
+              <span>🌀 <b>Moving Gates:</b> Tembok jawaban yang bergerak & berputar.</span>
+              <span>⏲️ <b>Time Attack:</b> Pemain harus jawab sebelum waktu habis!</span>
+              <span>🌈 <b>Effect Shop:</b> Pakai koin hasil kuis untuk beli efek karakter.</span>
+              <span>⚡ <b>Power Ups:</b> Jawaban benar kasih kecepatan (Speed) tambahan.</span>
+            </div>
+          </div>
+          <div class="panel card" style="background: var(--mint);">
+            <h3>🛠️ Rahasia Pro Developer</h3>
+            <p>Di kelas regular, kamu akan bongkar logika keren ini:</p>
+            <ul class="check-list">
+              <li><b>DataStore:</b> Simpan skor & level pemain biar gak hilang.</li>
+              <li><b>Global Leaderboard:</b> Pajang nama pemain paling pintar di server!</li>
+              <li><b>Advanced Scripting:</b> Pakai <i>Variables</i> & <i>Functions</i> tingkat lanjut.</li>
+              <li><b>Particle Effects:</b> Ledakan kembang api tiap kali jawaban benar.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pro-tips-mini" style="margin-top: 25px; text-align: center; border: 2px solid var(--green);">
+          <h3 style="margin-bottom: 5px; color: var(--green-deep);">Jangan Biarkan Kuis Kamu Berhenti di Sini! 🏁</h3>
+          <p>Ayo gabung di <b>Kelas Regular</b> untuk lanjutin bangun Obby-mu sampai jadi game viral di Roblox!</p>
         </div>
       </div>
-      <div class="panel card" style="background: var(--mint);">
-        <h3>🛠️ Rahasia Pro Developer</h3>
-        <p>Di kelas regular, kamu akan bongkar logika keren ini:</p>
-        <ul class="check-list">
-          <li><b>DataStore:</b> Simpan skor & level pemain biar gak hilang.</li>
-          <li><b>Global Leaderboard:</b> Pajang nama pemain paling pintar di server!</li>
-          <li><b>Advanced Scripting:</b> Pakai <i>Variables</i> & <i>Functions</i> tingkat lanjut.</li>
-          <li><b>Particle Effects:</b> Ledakan kembang api tiap kali jawaban benar.</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="pro-tips-mini" style="margin-top: 25px; text-align: center; border: 2px solid var(--green);">
-      <h3 style="margin-bottom: 5px; color: var(--green-deep);">Jangan Biarkan Kuis Kamu Berhenti di Sini! 🏁</h3>
-      <p>Ayo gabung di <b>Kelas Regular</b> untuk lanjutin bangun Obby-mu sampai jadi game viral di Roblox!</p>
-    </div>
-  </div>
-</section>
+    </section>
 
     <section class="slide">
-  <div class="topbar">
-    <div class="brand">
-      <div class="tag">Final Step</div>
-      <div class="tag">Become a Developer</div>
-    </div>
-    <div class="code-pill">Join Us!</div>
-  </div>
-  <div class="content">
-    <div class="promo-container">
-      <div class="promo-image">
-        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/23eba63a-a6e8-47f6-bf5e-d36c2be315c2.jpeg" alt="Roblox Promo Poster" style="border-radius: 20px; box-shadow: var(--shadow); max-height: 480px;">
-      </div>
-
-      <div class="promo-details">
-        <h2>Siap Bikin Game Viralmu Sendiri? 🚀</h2>
-        <p>Bergabunglah dengan ratusan teman lainnya di program <b>Game Developer</b> dan kuasai Roblox Studio secara total!</p>
-        
-        <div class="benefits-box">
-          <h4>Apa yang akan kamu kuasai?</h4>
-          <ul>
-            <li>✨ <b>Game Design:</b> Bikin map kelas dunia.</li>
-            <li>📜 <b>Logic & Programming:</b> Jago koding Lua.</li>
-            <li>🎨 <b>UI/UX:</b> Bikin tampilan game yang estetik.</li>
-            <li>💡 <b>Problem Solving:</b> Berpikir ala programmer.</li>
-          </ul>
+      <div class="topbar">
+        <div class="brand">
+          <div class="tag">Final Step</div>
+          <div class="tag">Become a Developer</div>
         </div>
+        <div class="code-pill">Join Us!</div>
+      </div>
+      <div class="content">
+        <div class="promo-container">
+          <div class="promo-image">
+            <img
+              src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/23eba63a-a6e8-47f6-bf5e-d36c2be315c2.jpeg"
+              alt="Roblox Promo Poster" style="border-radius: 20px; box-shadow: var(--shadow); max-height: 480px;">
+          </div>
 
-        <div class="next-step-badge">
-          <p>Tanya Student Advisor untuk informasi detail dan cara pendaftarannya ya!</p>
+          <div class="promo-details">
+            <h2>Siap Bikin Game Viralmu Sendiri? 🚀</h2>
+            <p>Bergabunglah dengan ratusan teman lainnya di program <b>Game Developer</b> dan kuasai Roblox Studio
+              secara total!</p>
+
+            <div class="benefits-box">
+              <h4>Apa yang akan kamu kuasai?</h4>
+              <ul>
+                <li>✨ <b>Game Design:</b> Bikin map kelas dunia.</li>
+                <li>📜 <b>Logic & Programming:</b> Jago koding Lua.</li>
+                <li>🎨 <b>UI/UX:</b> Bikin tampilan game yang estetik.</li>
+                <li>💡 <b>Problem Solving:</b> Berpikir ala programmer.</li>
+              </ul>
+            </div>
+
+            <div class="next-step-badge">
+              <p>Tanya Student Advisor untuk informasi detail dan cara pendaftarannya ya!</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <div class="footer-nav">
       <div class="dots" id="dots"></div>
